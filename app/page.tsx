@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
 import Cover from "@/components/Cover";
+import ItemsShowcase from "@/components/ItemsShowcase";
 import { getPosts, getProjects } from "@/lib/content";
 import { formatDate, plural } from "@/lib/format";
 
@@ -26,6 +27,8 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      <ItemsShowcase />
 
       <div className="home__grid">
         {latest && (
