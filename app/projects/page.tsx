@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { withBase } from "@/lib/format";
 import ProjectList from "@/components/ProjectList";
 import { ArchiveIcon } from "@/components/Icons";
 import { getProjects } from "@/lib/content";
@@ -15,7 +16,7 @@ export default function ProjectsPage() {
         <div>
           <h1 className="page-title">Проекты</h1>
           <p className="page-sub">
-            Подписаться на <Link href="/posts">посты</Link> и <a href="/rss.xml">RSS-ленту</a>
+            Подписаться на <Link href="/posts">посты</Link> и <a href={withBase("/rss.xml")}>RSS-ленту</a>
           </p>
         </div>
         <Link href="/projects/archive" className="button button--icon">

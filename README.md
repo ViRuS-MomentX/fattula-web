@@ -59,9 +59,21 @@ archived: false                 # true — проект уйдёт в «Архи
 - архив проектов и RSS-лента (`/rss.xml`);
 - индикатор прочтения на странице поста.
 
-## Настройка
+## Публикация
 
-Адрес сайта для RSS и превью ссылок задаётся переменной окружения `NEXT_PUBLIC_SITE_URL`
-(например, в настройках проекта на Vercel).
+Сайт публикуется на GitHub Pages: https://virus-momentx.github.io/fattula-web/
+
+Каждый пуш в `main` запускает `.github/workflows/deploy.yml`: он собирает статическую
+версию сайта (папка `out/`) и выкладывает её. Один раз нужно включить Pages:
+**Settings → Pages → Source: GitHub Actions**.
+
+Переменные окружения при сборке:
+
+- `NEXT_PUBLIC_BASE_PATH` — подпапка сайта, для GitHub Pages это `/fattula-web`;
+- `NEXT_PUBLIC_SITE_URL` — полный адрес сайта для RSS и превью ссылок.
+
+Если сайт переедет на свой домен, уберите `NEXT_PUBLIC_BASE_PATH` из workflow.
+
+## Настройка
 
 Цвета и шрифты находятся в начале `app/globals.css`.

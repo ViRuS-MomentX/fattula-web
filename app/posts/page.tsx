@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PostList from "@/components/PostList";
 import { getPosts } from "@/lib/content";
-import { plural } from "@/lib/format";
+import { plural, withBase } from "@/lib/format";
 
 export const metadata: Metadata = { title: "Посты" };
 
@@ -14,7 +14,7 @@ export default function PostsPage() {
         <h1 className="page-title">Посты</h1>
         <p className="page-sub">
           {posts.length} {plural(posts.length, "пост", "поста", "постов")}. Подписаться можно через{" "}
-          <a href="/rss.xml">RSS-ленту</a>.
+          <a href={withBase("/rss.xml")}>RSS-ленту</a>.
         </p>
       </header>
       {posts.length ? (

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
+import { BASE_PATH } from "./format";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
@@ -53,6 +54,11 @@ function readingMinutes(text: string) {
   return Math.max(1, Math.round(words / 180));
 }
 
+const render = (md: string) =>
+  marked
+    .parse(md, { async: false })
+    .replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_PATH}/`);
+
 const byDateDesc = (a: { date: string }, b: { date: string }) =>
   b.date.localeCompare(a.date);
 
@@ -67,7 +73,7 @@ export function getPosts(): Post[] {
       tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
       cover: data.cover ? String(data.cover) : undefined,
       readingMinutes: readingMinutes(content),
-      html: marked.parse(content, { async: false }),
+      html: render(content),
     }))
     .sort(byDateDesc);
 }
@@ -88,7 +94,7 @@ export function getProjects({ archived = false } = {}): Project[] {
       link: data.link ? String(data.link) : undefined,
       cover: data.cover ? String(data.cover) : undefined,
       archived: Boolean(data.archived),
-      html: marked.parse(content, { async: false }),
+      html: render(content),
     }))
     .filter((p) => p.archived === archived)
     .sort(byDateDesc);

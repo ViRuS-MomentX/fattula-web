@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { withBase } from "@/lib/format";
 import { RssIcon } from "./Icons";
 
 export default function Footer() {
@@ -8,7 +9,7 @@ export default function Footer() {
         <p>fattula, {new Date().getFullYear()}</p>
         <nav className="site-footer__links" aria-label="Дополнительно">
           <Link href="/projects/archive">Архив проектов</Link>
-          <a href="/rss.xml">
+          <a href={withBase("/rss.xml")}>
             <RssIcon size={16} />
             RSS
           </a>

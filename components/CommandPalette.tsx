@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { SearchItem } from "@/lib/content";
+import { withBase } from "@/lib/format";
 import { OPEN_PALETTE_EVENT } from "./Header";
 import { SearchIcon } from "./Icons";
 
@@ -87,7 +88,7 @@ export default function CommandPalette({ items }: { items: SearchItem[] }) {
   const go = (item: SearchItem | undefined) => {
     if (!item) return;
     setOpen(false);
-    if (item.href.endsWith(".xml")) window.location.href = item.href;
+    if (item.href.endsWith(".xml")) window.location.href = withBase(item.href);
     else router.push(item.href);
   };
 

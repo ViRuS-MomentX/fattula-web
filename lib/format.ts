@@ -25,6 +25,13 @@ export function plural(n: number, one: string, few: string, many: string) {
   return many;
 }
 
+/** Base path for GitHub Pages (e.g. "/fattula-web"); empty on a root domain. */
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+/** Prefix a root-relative URL with the base path. next/link does this itself. */
+export const withBase = (url: string) =>
+  url.startsWith("/") && !url.startsWith("//") ? BASE_PATH + url : url;
+
 export const SITE = {
   name: "fattula",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://fattula.vercel.app",

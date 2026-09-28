@@ -8,8 +8,8 @@ const escape = (s: string) =>
 
 export function GET() {
   const items = [
-    ...getPosts().map((p) => ({ ...p, url: `${SITE.url}/posts/${p.slug}`, category: "Пост" })),
-    ...getProjects().map((p) => ({ ...p, url: `${SITE.url}/projects/${p.slug}`, category: "Проект" })),
+    ...getPosts().map((p) => ({ ...p, url: `${SITE.url}/posts/${p.slug}/`, category: "Пост" })),
+    ...getProjects().map((p) => ({ ...p, url: `${SITE.url}/projects/${p.slug}/`, category: "Проект" })),
   ].sort((a, b) => b.date.localeCompare(a.date));
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

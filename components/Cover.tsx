@@ -1,3 +1,5 @@
+import { withBase } from "@/lib/format";
+
 const PALETTE = ["#a97cff", "#6b3fd9", "#d8c3ff", "#e36fd8", "#ffc4a3", "#3b2466"];
 
 function hash(str: string) {
@@ -79,7 +81,7 @@ const PATTERNS = [Orbits, Stripes, Dots];
 
 /** Project cover: an image if one is set, otherwise a pattern drawn from the slug. */
 export default function Cover({ seed, src, alt = "" }: { seed: string; src?: string; alt?: string }) {
-  if (src) return <img className="cover" src={src} alt={alt} loading="lazy" />;
+  if (src) return <img className="cover" src={withBase(src)} alt={alt} loading="lazy" />;
 
   const r = rng(hash(seed));
   const offset = Math.floor(r() * PALETTE.length);
