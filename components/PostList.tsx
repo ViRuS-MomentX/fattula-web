@@ -40,7 +40,7 @@ export default function PostList({ posts }: { posts: Item[] }) {
           </h2>
           <ol className="post-list">
             {items.map((p) => (
-              <li key={p.slug} className="post-row">
+              <li key={p.slug} className="post-row spot">
                 <time className="post-row__date" dateTime={p.date}>
                   {formatShortDate(p.date)}
                 </time>

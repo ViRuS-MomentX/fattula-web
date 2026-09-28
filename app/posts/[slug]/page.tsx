@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReadingProgress from "@/components/ReadingProgress";
+import CodeCopy from "@/components/CodeCopy";
+import Toc from "@/components/Toc";
 import { BackIcon } from "@/components/Icons";
 import { getPost, getPosts } from "@/lib/content";
 import { formatDate, plural } from "@/lib/format";
@@ -32,8 +34,10 @@ export default async function PostPage({ params }: Props) {
   const older = posts[index + 1];
 
   return (
-    <article className="page article">
+    <div className="page article-layout">
       <ReadingProgress />
+      <CodeCopy />
+      <article className="article">
       <Link href="/posts" className="back-link">
         <BackIcon size={16} />
         Все посты
@@ -57,19 +61,23 @@ export default async function PostPage({ params }: Props) {
       {(newer || older) && (
         <nav className="pager" aria-label="Другие посты">
           {older && (
-            <Link href={`/posts/${older.slug}`} className="pager__link">
+            <Link href={`/posts/${older.slug}`} className="pager__link spot">
               <span className="pager__hint">Предыдущий пост</span>
               {older.title}
             </Link>
           )}
           {newer && (
-            <Link href={`/posts/${newer.slug}`} className="pager__link pager__link--next">
+            <Link href={`/posts/${newer.slug}`} className="pager__link pager__link--next spot">
               <span className="pager__hint">Следующий пост</span>
               {newer.title}
             </Link>
           )}
         </nav>
       )}
-    </article>
+      </article>
+      <aside className="article-aside">
+        <Toc headings={post.headings} />
+      </aside>
+    </div>
   );
 }

@@ -3,6 +3,7 @@ import { Onest, Unbounded } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CommandPalette from "@/components/CommandPalette";
+import Spotlight from "@/components/Spotlight";
 import { getSearchIndex } from "@/lib/content";
 import { SITE } from "@/lib/format";
 import "./globals.css";
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <CommandPalette items={getSearchIndex()} />
+        <Spotlight />
       </body>
     </html>
   );

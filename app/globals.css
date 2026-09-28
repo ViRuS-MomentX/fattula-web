@@ -944,6 +944,130 @@ code {
   font-weight: 400;
 }
 
+/* ---------- Pointer spotlight ---------- */
+.spot {
+  position: relative;
+  isolation: isolate;
+}
+
+.spot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--violet) 18%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+
+.spot:hover::before {
+  opacity: 1;
+}
+
+/* ---------- Post layout with table of contents ---------- */
+.article-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 760px) 220px;
+  justify-content: space-between;
+  gap: 64px;
+}
+
+.article-aside {
+  padding-top: 52px;
+}
+
+.toc {
+  position: sticky;
+  top: calc(var(--header-h) + 32px);
+  font-size: var(--fs-sm);
+}
+
+.toc__title {
+  margin-bottom: 12px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--line);
+}
+
+.toc a {
+  display: block;
+  margin-left: -1px;
+  padding: 6px 0 6px 14px;
+  border-left: 2px solid transparent;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.toc a:hover {
+  color: var(--text);
+}
+
+.toc a[aria-current="true"] {
+  border-left-color: var(--violet);
+  color: var(--lilac);
+}
+
+.prose h2 {
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.prose pre {
+  position: relative;
+}
+
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-raised);
+  color: var(--text-dim);
+  font: inherit;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.prose pre:hover .copy-button,
+.copy-button:focus-visible {
+  opacity: 1;
+}
+
+.copy-button:hover {
+  color: var(--text);
+  border-color: var(--violet);
+}
+
+@media (hover: none) {
+  .copy-button {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .article-layout {
+    grid-template-columns: minmax(0, 760px);
+    justify-content: start;
+  }
+
+  .article-aside {
+    display: none;
+  }
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;

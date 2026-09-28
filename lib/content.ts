@@ -15,8 +15,11 @@ export type Post = {
   tags: string[];
   cover?: string;
   readingMinutes: number;
+  headings: Heading[];
   html: string;
 };
+
+export type Heading = { id: string; text: string };
 
 export type Project = {
   kind: "project";
@@ -54,10 +57,29 @@ function readingMinutes(text: string) {
   return Math.max(1, Math.round(words / 180));
 }
 
+const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/<[^>]+>/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-|-$/g, "");
+
 const render = (md: string) =>
   marked
     .parse(md, { async: false })
     .replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_PATH}/`);
+
+/** Gives every h2 an id and returns the list for the table of contents. */
+function withHeadings(html: string) {
+  const headings: Heading[] = [];
+  const out = html.replace(/<h2>(.*?)<\/h2>/g, (_, inner: string) => {
+    const text = inner.replace(/<[^>]+>/g, "");
+    const id = slugify(text);
+    headings.push({ id, text });
+    return `<h2 id="${id}">${inner}</h2>`;
+  });
+  return { html: out, headings };
+}
 
 const byDateDesc = (a: { date: string }, b: { date: string }) =>
   b.date.localeCompare(a.date);
@@ -73,7 +95,7 @@ export function getPosts(): Post[] {
       tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
       cover: data.cover ? String(data.cover) : undefined,
       readingMinutes: readingMinutes(content),
-      html: render(content),
+      ...withHeadings(render(content)),
     }))
     .sort(byDateDesc);
 }

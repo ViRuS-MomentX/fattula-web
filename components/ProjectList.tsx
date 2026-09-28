@@ -30,7 +30,7 @@ export default function ProjectList({ projects }: { projects: Item[] }) {
 
       <ul className="project-list">
         {shown.map((p) => (
-          <li key={p.slug} className="project-row">
+          <li key={p.slug} className="project-row spot">
             <div className="project-row__text">
               <h2 className="project-row__title">
                 <Link href={`/projects/${p.slug}`} className="stretched">

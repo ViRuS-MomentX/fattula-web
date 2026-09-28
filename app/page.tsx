@@ -36,7 +36,7 @@ export default function HomePage() {
             <h2 className="section-title" id="latest-heading">
               Свежий пост
             </h2>
-            <article className="feature">
+            <article className="feature spot">
               <p className="meta">
                 <time dateTime={latest.date}>{formatDate(latest.date)}</time>
                 <span>
@@ -64,7 +64,7 @@ export default function HomePage() {
           </div>
           <ul className="mini-projects">
             {projects.map((p) => (
-              <li key={p.slug} className="mini-project">
+              <li key={p.slug} className="mini-project spot">
                 <div className="mini-project__cover">
                   <Cover seed={p.slug} src={p.cover} />
                 </div>
