@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
+import { withBase } from "@/lib/format";
 
 export type ShowcaseItem = {
   name: string;
   source: string;
-  kind: "Игра" | "Сериал" | "Фильм";
+  kind: "Игра" | "Сериал" | "Фильм" | "Мем";
   fact: string;
   glow: string;
   art: ReactNode;
@@ -192,5 +193,13 @@ export const ITEMS: ShowcaseItem[] = [
         </g>
       </svg>
     ),
+  },
+  {
+    name: "Будущий владелец сайта",
+    source: "fattula",
+    kind: "Мем",
+    fact: "Лично проверяет каждый пиксель. Если вы долистали досюда, он вами доволен.",
+    glow: "#d9985f",
+    art: <img className="showcase__photo" src={withBase("/images/owner.png")} alt="" />,
   },
 ];

@@ -73,7 +73,7 @@ export default function ItemsShowcase() {
             <p className="showcase__fact">{item.fact}</p>
           </div>
           <p className="showcase__counter">
-            {active + 1} из {count}. Листайте дальше
+            {active + 1} из {count}. {active === count - 1 ? "Это последний" : "Листайте дальше"}
           </p>
         </div>
 
