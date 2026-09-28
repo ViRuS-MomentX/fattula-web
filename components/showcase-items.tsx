@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 export type ShowcaseItem = {
   name: string;
   source: string;
-  kind: "Игра" | "Сериал";
+  kind: "Игра" | "Сериал" | "Фильм";
   fact: string;
   glow: string;
   art: ReactNode;
@@ -102,6 +102,23 @@ export const ITEMS: ShowcaseItem[] = [
         </g>
         <circle cx="100" cy="100" r="40" fill="#d8dbe4" stroke="#6d7385" strokeWidth="6" />
         <path d="M100 122c-18-12-26-20-26-31a13 13 0 0 1 26-3 13 13 0 0 1 26 3c0 11-8 19-26 31Z" fill="#f58cc4" />
+      </svg>
+    ),
+  },
+  {
+    name: "Щит Капитана Америки",
+    source: "Первый мститель",
+    kind: "Фильм",
+    fact: "Щит из вибраниума гасит почти любой удар. А если его бросить, он может отскочить от стены и вернуться к хозяину.",
+    glow: "#3b6fd9",
+    art: (
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="84" fill="#b3122e" />
+        <circle cx="100" cy="100" r="67" fill="#eceef4" />
+        <circle cx="100" cy="100" r="51" fill="#c8102e" />
+        <circle cx="100" cy="100" r="35" fill="#0b3d91" />
+        <path d="M100.0 70.0 L107.1 90.3 L128.5 90.7 L111.4 103.7 L117.6 124.3 L100.0 112.0 L82.4 124.3 L88.6 103.7 L71.5 90.7 L92.9 90.3Z" fill="#eceef4" />
+        <path d="M40 60A72 72 0 0 1 120 30" fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round" opacity="0.35" />
       </svg>
     ),
   },
