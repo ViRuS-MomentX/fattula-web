@@ -2393,6 +2393,60 @@ button {
   font-size: var(--fs-md);
 }
 
+/* ---------- Party mode ---------- */
+:root[data-party] .backdrop,
+:root[data-party] .shapes,
+:root[data-party] .logo__mark {
+  animation: party-hue 1.6s linear infinite;
+}
+
+:root[data-party] .backdrop__blob {
+  animation-duration: 3s;
+}
+
+:root[data-party] .wordmark__letter {
+  animation: party-dance 0.7s ease-in-out calc(var(--i) * -0.1s) infinite alternate;
+  color: var(--lilac);
+}
+
+:root[data-party] .marquee__track {
+  animation-duration: 6s;
+}
+
+@keyframes party-hue {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes party-dance {
+  from {
+    translate: 0 0.08em;
+    rotate: -6deg;
+    font-variation-settings: "wght" 300;
+  }
+  to {
+    translate: 0 -0.12em;
+    rotate: 6deg;
+    font-variation-settings: "wght" 900;
+  }
+}
+
+.toast--party {
+  background: linear-gradient(90deg, #7c4dff, #e36fd8, #ffc4a3, #7c4dff);
+  background-size: 300% 100%;
+  border: 0;
+  color: #150c21;
+  font-weight: 700;
+  animation: toast-in 0.3s cubic-bezier(0.2, 1.3, 0.4, 1), party-slide 1.5s linear infinite;
+}
+
+@keyframes party-slide {
+  to {
+    background-position: 300% 0;
+  }
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;

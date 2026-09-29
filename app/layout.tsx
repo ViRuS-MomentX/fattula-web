@@ -11,6 +11,7 @@ import Backdrop from "@/components/Backdrop";
 import Magnetic from "@/components/Magnetic";
 import RouteProgress from "@/components/RouteProgress";
 import Cursor from "@/components/Cursor";
+import PartyMode from "@/components/PartyMode";
 import { getSearchIndex } from "@/lib/content";
 import { SITE } from "@/lib/format";
 import "./globals.css";
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Konami />
         <Magnetic />
         <Cursor />
+        <PartyMode />
       </body>
     </html>
   );
