@@ -1562,6 +1562,36 @@ body::after {
   }
 }
 
+/* ---------- Touch feedback ---------- */
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) {
+  .spot,
+  .button,
+  .chip,
+  .tabs__item,
+  .more-projects__item,
+  .pager__link {
+    transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.15s;
+  }
+
+  .spot:active,
+  .more-projects__item:active,
+  .pager__link:active {
+    transform: scale(0.98);
+    background-color: var(--bg-hover);
+  }
+
+  .button:active,
+  .chip:active,
+  .tabs__item:active {
+    transform: scale(0.94);
+  }
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;

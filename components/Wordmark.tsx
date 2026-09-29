@@ -61,8 +61,24 @@ export default function Wordmark({ word = "fattula", as: Tag = "h1" }: { word?: 
       if (!frame) frame = requestAnimationFrame(render);
     };
 
+    // On touch screens there is no hovering pointer, so a slow "ghost"
+    // pointer sweeps across the word; a real touch takes over for a moment.
+    const canHover = window.matchMedia("(hover: hover)").matches;
+    let autoFrame = 0;
+    let manualUntil = 0;
+    const sweep = (now: number) => {
+      autoFrame = requestAnimationFrame(sweep);
+      if (now < manualUntil || document.hidden) return;
+      const r = root.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      const phase = (Math.sin(now / 1400) + 1) / 2;
+      pointer = [r.left + phase * r.width, r.top + r.height / 2];
+      queue();
+    };
+
     const onMove = (e: PointerEvent) => {
       pointer = [e.clientX, e.clientY];
+      manualUntil = performance.now() + 1500;
       queue();
     };
     const onLeave = () => {
@@ -91,6 +107,7 @@ export default function Wordmark({ word = "fattula", as: Tag = "h1" }: { word?: 
       rest();
       window.addEventListener("pointermove", onMove, { passive: true });
       document.documentElement.addEventListener("pointerleave", onLeave);
+      if (!canHover) setTimeout(() => (autoFrame = requestAnimationFrame(sweep)), 1700);
       window.addEventListener("scroll", onResize, { passive: true });
     };
 
@@ -100,6 +117,7 @@ export default function Wordmark({ word = "fattula", as: Tag = "h1" }: { word?: 
     return () => {
       clearTimeout(intro);
       cancelAnimationFrame(frame);
+      cancelAnimationFrame(autoFrame);
       window.removeEventListener("pointermove", onMove);
       document.documentElement.removeEventListener("pointerleave", onLeave);
       window.removeEventListener("scroll", onResize);
