@@ -32,6 +32,15 @@ export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export const withBase = (url: string) =>
   url.startsWith("/") && !url.startsWith("//") ? BASE_PATH + url : url;
 
+/**
+ * Links shown in the footer under "Контакты". Empty by default, so the column
+ * stays hidden until the owner adds their own, for example:
+ *   { label: "Telegram", href: "https://t.me/username" },
+ *   { label: "GitHub", href: "https://github.com/username" },
+ *   { label: "Почта", href: "mailto:name@example.com" },
+ */
+export const CONTACTS: { label: string; href: string }[] = [];
+
 export const SITE = {
   name: "fattula",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://fattula.vercel.app",

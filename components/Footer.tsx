@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { withBase } from "@/lib/format";
+import { CONTACTS, withBase } from "@/lib/format";
 import { RssIcon } from "./Icons";
 import AccentPicker from "./AccentPicker";
 import ThemeToggle from "./ThemeToggle";
@@ -24,6 +24,16 @@ export default function Footer() {
             RSS-лента
           </a>
         </div>
+        {CONTACTS.length > 0 && (
+          <div className="site-footer__col">
+            <p className="site-footer__title">Контакты</p>
+            {CONTACTS.map((c) => (
+              <a key={c.href} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+                {c.label}
+              </a>
+            ))}
+          </div>
+        )}
         <div className="site-footer__col">
           <p className="site-footer__title">Оформление</p>
           <ThemeToggle />
