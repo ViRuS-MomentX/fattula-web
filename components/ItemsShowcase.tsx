@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ITEMS } from "./showcase-items";
+import { useSpin } from "./useSpin";
 
 /**
  * Scroll-driven showcase: the stage sticks to the viewport while the section
@@ -9,6 +10,7 @@ import { ITEMS } from "./showcase-items";
  */
 export default function ItemsShowcase() {
   const rootRef = useRef<HTMLElement>(null);
+  const stageRef = useSpin<HTMLDivElement>();
   const [active, setActive] = useState(0);
   const count = ITEMS.length;
 
@@ -80,7 +82,7 @@ export default function ItemsShowcase() {
           </p>
         </div>
 
-        <div className="showcase__stage" aria-hidden="true">
+        <div className="showcase__stage" aria-hidden="true" ref={stageRef} title="Потяните, чтобы покрутить">
           <div className="showcase__orb" />
           {ITEMS.map((it, i) => (
             <div

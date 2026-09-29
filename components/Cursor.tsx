@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const INTERACTIVE = "a, button, [role='option'], .zoomable, input";
+const INTERACTIVE = "a, button, [role='option'], .zoomable, input, .showcase__stage";
 
 /** A dot that follows the pointer exactly and a ring that trails it softly. */
 export default function Cursor() {
