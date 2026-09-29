@@ -2313,6 +2313,86 @@ button {
   }
 }
 
+/* ---------- 404 orb game ---------- */
+.orb-game {
+  margin-top: 56px;
+}
+
+.orb-game__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 14px;
+}
+
+.orb-game__stats {
+  display: flex;
+  gap: 16px;
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.orb-game__area {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: 360px;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 120%, color-mix(in oklab, var(--violet-strong) 30%, transparent), transparent 60%),
+    color-mix(in oklab, var(--bg-raised) 70%, transparent);
+  touch-action: none;
+}
+
+.orb {
+  position: absolute;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  translate: -50% -50%;
+  box-shadow: inset -6px -8px 14px rgb(0 0 0 / 0.25), inset 5px 6px 10px rgb(255 255 255 / 0.35), 0 0 24px currentColor;
+  cursor: pointer;
+}
+
+.orb-pop {
+  position: absolute;
+  translate: -50% -50%;
+  color: var(--lilac);
+  font-family: var(--font-display);
+  font-weight: 700;
+  pointer-events: none;
+  animation: orb-pop 0.4s ease-out forwards;
+}
+
+@keyframes orb-pop {
+  to {
+    opacity: 0;
+    translate: -50% -140%;
+  }
+}
+
+.orb-game__overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  padding: 16px;
+  text-align: center;
+  background: color-mix(in oklab, var(--bg) 40%, transparent);
+}
+
+.orb-game__result {
+  font-size: var(--fs-md);
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;
@@ -2323,7 +2403,7 @@ button {
 }
 
 .not-found__code .wordmark {
-  font-size: clamp(5rem, 24vw, 12rem);
+  font-size: clamp(4rem, 16vw, 8rem);
 }
 
 /* ---------- Command palette ---------- */

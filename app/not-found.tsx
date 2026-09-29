@@ -1,6 +1,7 @@
 import Scramble from "@/components/Scramble";
 import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
+import OrbGame from "@/components/OrbGame";
 
 export default function NotFound() {
   return (
@@ -15,6 +16,7 @@ export default function NotFound() {
         Возможно, ссылка устарела. Откройте <Link href="/posts">посты</Link>, <Link href="/projects">проекты</Link> или
         нажмите <span className="nowrap"><kbd>Ctrl</kbd> + <kbd>K</kbd>,</span> чтобы найти нужное.
       </p>
+      <OrbGame />
     </div>
   );
 }
