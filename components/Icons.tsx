@@ -80,3 +80,12 @@ export const CompassIcon = ({ size = 18 }: IconProps) => (
     <path d="m15 9-2 4-4 2 2-4Z" />
   </svg>
 );
+
+export const ListIcon = ({ size = 18 }: IconProps) => (
+  <svg {...base(size)}>
+    <path d="M9 6h11M9 12h11M9 18h11" />
+    <circle cx="4.5" cy="6" r="1" fill="currentColor" stroke="none" />
+    <circle cx="4.5" cy="12" r="1" fill="currentColor" stroke="none" />
+    <circle cx="4.5" cy="18" r="1" fill="currentColor" stroke="none" />
+  </svg>
+);
