@@ -13,7 +13,7 @@ import ShareButton from "@/components/ShareButton";
 import ReadingControls from "@/components/ReadingControls";
 import { BackIcon } from "@/components/Icons";
 import { getPost, getPosts } from "@/lib/content";
-import { formatDate, plural } from "@/lib/format";
+import { formatDate, plural, SITE } from "@/lib/format";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -46,8 +46,26 @@ export default async function PostPage({ params }: Props) {
   const newer = posts[index - 1];
   const older = posts[index + 1];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    inLanguage: "ru",
+    keywords: post.tags.join(", "),
+    url: `${SITE.url}/posts/${post.slug}/`,
+    image: `${SITE.url}/posts/${post.slug}/og.png`,
+    author: { "@type": "Person", name: SITE.name },
+  };
+
   return (
     <div className="page article-layout">
+      <script
+        type="application/ld+json"
+        // "<" is escaped so a title can never close the script tag.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <ReadingProgress />
       <CodeCopy />
       <Lightbox />
