@@ -1,13 +1,16 @@
 import Link from "next/link";
+import Wordmark from "@/components/Wordmark";
 
 export default function NotFound() {
   return (
     <div className="page not-found">
-      <p className="not-found__code" aria-hidden="true">404</p>
+      <div className="not-found__code">
+        <Wordmark word="404" as="p" />
+      </div>
       <h1 className="page-title">Такой страницы нет</h1>
       <p className="page-sub">
         Возможно, ссылка устарела. Откройте <Link href="/posts">посты</Link>, <Link href="/projects">проекты</Link> или
-        нажмите <kbd>Ctrl</kbd> + <kbd>K</kbd>, чтобы найти нужное.
+        нажмите <span className="nowrap"><kbd>Ctrl</kbd> + <kbd>K</kbd>,</span> чтобы найти нужное.
       </p>
     </div>
   );

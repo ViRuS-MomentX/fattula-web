@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-const WORD = "fattula";
 const MIN = 200;
 const MAX = 900;
 
@@ -11,8 +10,8 @@ const MAX = 900;
  * pointer (or finger) is. Letters sit in fixed-width boxes measured at the
  * heaviest weight, so the word never shifts while the weight changes.
  */
-export default function Wordmark() {
-  const rootRef = useRef<HTMLHeadingElement>(null);
+export default function Wordmark({ word = "fattula", as: Tag = "h1" }: { word?: string; as?: "h1" | "p" }) {
+  const rootRef = useRef<HTMLHeadingElement & HTMLParagraphElement>(null);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -109,8 +108,13 @@ export default function Wordmark() {
   }, []);
 
   return (
-    <h1 className="wordmark" ref={rootRef} aria-label={WORD}>
-      {WORD.split("").map((ch, i) => (
+    <Tag
+      className="wordmark"
+      ref={rootRef}
+      aria-label={Tag === "h1" ? word : undefined}
+      aria-hidden={Tag === "p" ? true : undefined}
+    >
+      {word.split("").map((ch, i) => (
         <span
           key={i}
           className="wordmark__letter"
@@ -120,6 +124,6 @@ export default function Wordmark() {
           {ch}
         </span>
       ))}
-    </h1>
+    </Tag>
   );
 }
