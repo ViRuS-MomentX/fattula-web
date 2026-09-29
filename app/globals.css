@@ -534,15 +534,6 @@ code {
   padding: clamp(8px, 4vw, 40px) 0 clamp(48px, 8vw, 88px);
 }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: -20% -10% 10% -10%;
-  background: radial-gradient(50% 55% at 30% 45%, color-mix(in oklab, var(--violet-strong) 26%, transparent), transparent 70%);
-  pointer-events: none;
-}
-
 .wordmark {
   display: flex;
   font-family: var(--font-display);
@@ -835,10 +826,7 @@ code {
 
 /* ---------- Marquee ---------- */
 .marquee {
-  position: relative;
-  left: 50%;
-  width: 100vw;
-  margin: 0 0 clamp(48px, 8vw, 96px) -50vw;
+  margin: 0 0 clamp(48px, 8vw, 96px);
   padding: 18px 0;
   overflow: hidden;
   border-block: 1px solid var(--line);
@@ -2766,6 +2754,14 @@ button {
 
 .showcase__index button[data-seen]::after {
   opacity: 0.85;
+}
+
+.home--top {
+  padding-bottom: 0;
+}
+
+.home--rest {
+  padding-top: 0;
 }
 
 /* ---------- 404 ---------- */

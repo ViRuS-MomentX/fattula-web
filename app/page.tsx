@@ -22,7 +22,8 @@ export default function HomePage() {
   );
 
   return (
-    <div className="page home">
+    <>
+    <div className="page home home--top">
       <section className="hero">
         <FloatingShapes />
         <SparkleTrail />
@@ -49,8 +50,12 @@ export default function HomePage() {
       <ItemsShowcase />
 
       <div id="after-showcase" tabIndex={-1} />
-      <Marquee items={topics} />
+    </div>
 
+    {/* Outside .page so it spans the full window without any 100vw tricks. */}
+    <Marquee items={topics} />
+
+    <div className="page home home--rest">
       <div className="home__grid">
         {latest && (
           <section aria-labelledby="latest-heading">
@@ -107,5 +112,6 @@ export default function HomePage() {
         </section>
       </div>
     </div>
+    </>
   );
 }
