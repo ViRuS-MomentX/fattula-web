@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Cover from "@/components/Cover";
 import CodeCopy from "@/components/CodeCopy";
+import Lightbox from "@/components/Lightbox";
 import { BackIcon, ExternalIcon } from "@/components/Icons";
 import { getProject, getProjects } from "@/lib/content";
 import { formatDate } from "@/lib/format";
@@ -29,6 +30,7 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <article className="page article">
       <CodeCopy />
+      <Lightbox />
       <Link href={project.archived ? "/projects/archive" : "/projects"} className="back-link">
         <BackIcon size={16} />
         {project.archived ? "Архив проектов" : "Все проекты"}

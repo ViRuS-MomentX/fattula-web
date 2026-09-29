@@ -1373,10 +1373,6 @@ body::after {
   text-align: right;
 }
 
-.site-footer__hint {
-  margin-left: 12px;
-}
-
 @media (hover: none) {
   .site-footer__hint {
     display: none;
@@ -1590,31 +1586,121 @@ body::after {
 
 /* ---------- Footer ---------- */
 .site-footer {
+  position: relative;
+  overflow: hidden;
+  margin-top: 48px;
   border-top: 1px solid var(--line);
   color: var(--text-dim);
   font-size: var(--fs-sm);
+  background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--violet-strong) 12%, transparent));
 }
 
 .site-footer__inner {
   max-width: var(--page);
   margin: 0 auto;
-  padding: 24px var(--gutter);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 12px;
+  padding: 48px var(--gutter) 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 32px;
 }
 
-.site-footer__links {
-  display: flex;
-  gap: 20px;
+.site-footer__col {
+  display: grid;
+  align-content: start;
+  gap: 8px;
 }
 
-.site-footer__links a {
+.site-footer__col a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  width: fit-content;
   color: var(--text-dim);
+  text-decoration: none;
+}
+
+.site-footer__col a:hover {
+  color: var(--text);
+}
+
+.site-footer__title {
+  margin-bottom: 4px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.site-footer__bottom {
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 8px;
+}
+
+/* A giant outlined wordmark, cropped by the bottom edge of the page. */
+.site-footer__word {
+  margin: 0 0 -0.26em;
+  font-family: var(--font-display);
+  font-size: 23.5vw;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-align: center;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in oklab, var(--violet) 55%, transparent);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ---------- Lightbox ---------- */
+.prose img.zoomable {
+  cursor: zoom-in;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: color-mix(in oklab, #07030d 88%, transparent);
+  backdrop-filter: blur(6px);
+  cursor: zoom-out;
+  animation: fade 0.15s ease-out;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 88vh;
+  border-radius: 14px;
+  box-shadow: 0 40px 100px -30px rgb(0 0 0 / 0.9);
+  animation: rise 0.2s ease-out;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--bg-raised);
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid var(--bg);
+  border-radius: 999px;
+  background: var(--line);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--violet);
 }
 
 /* ---------- Responsive ---------- */

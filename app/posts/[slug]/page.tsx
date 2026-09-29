@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReadingProgress from "@/components/ReadingProgress";
 import CodeCopy from "@/components/CodeCopy";
+import Lightbox from "@/components/Lightbox";
 import Toc from "@/components/Toc";
 import ShareButton from "@/components/ShareButton";
 import { BackIcon } from "@/components/Icons";
@@ -44,6 +45,7 @@ export default async function PostPage({ params }: Props) {
     <div className="page article-layout">
       <ReadingProgress />
       <CodeCopy />
+      <Lightbox />
       <article className="article">
       <Link href="/posts" className="back-link">
         <BackIcon size={16} />
