@@ -2743,6 +2743,31 @@ button {
   background: var(--lilac);
 }
 
+/* ---------- Showcase collection ---------- */
+.showcase__collected {
+  display: block;
+  margin-top: 4px;
+  color: var(--lilac);
+}
+
+.showcase__index button::after {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 0.3em;
+  margin-left: 0.6em;
+  border-left: 2px solid var(--lilac);
+  border-bottom: 2px solid var(--lilac);
+  rotate: -45deg;
+  translate: 0 -0.15em;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.showcase__index button[data-seen]::after {
+  opacity: 0.85;
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;

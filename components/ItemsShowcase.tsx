@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { ITEMS } from "./showcase-items";
 import { useSpin } from "./useSpin";
 
+const SEEN_KEY = "fattula:showcase-seen";
+
 /**
  * Scroll-driven showcase: the stage sticks to the viewport while the section
  * scrolls past, and each slice of the scroll shows the next item.
@@ -13,6 +15,26 @@ export default function ItemsShowcase() {
   const stageRef = useSpin<HTMLDivElement>();
   const [active, setActive] = useState(0);
   const count = ITEMS.length;
+  const wasComplete = useRef(false);
+  const [seen, setSeen] = useState<string[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [complete, setComplete] = useState(false);
+
+  // Restore the collection from this browser before anything is saved.
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(SEEN_KEY) ?? "[]");
+      if (Array.isArray(saved)) {
+        const known = saved.filter((n) => ITEMS.some((it) => it.name === n));
+        // A finished collection restored from storage is not a new achievement.
+        wasComplete.current = known.length === ITEMS.length;
+        setSeen(known);
+      }
+    } catch {
+      /* no storage: the collection lives for this visit */
+    }
+    setLoaded(true);
+  }, []);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -54,6 +76,32 @@ export default function ItemsShowcase() {
 
   const item = ITEMS[active];
 
+  // An item counts as collected once it has been on stage.
+  useEffect(() => {
+    if (!loaded) return;
+    setSeen((prev) => (prev.includes(item.name) ? prev : [...prev, item.name]));
+  }, [loaded, item.name]);
+
+  useEffect(() => {
+    if (!loaded || seen.length === 0) return;
+    try {
+      localStorage.setItem(SEEN_KEY, JSON.stringify(seen));
+    } catch {
+      /* ignore */
+    }
+  }, [loaded, seen]);
+
+  useEffect(() => {
+    if (!loaded) return;
+    const done = seen.length === count;
+    // Only celebrate the moment the last item is collected, not on every visit.
+    if (done && !wasComplete.current && seen.length > 0) {
+      setComplete(true);
+      setTimeout(() => setComplete(false), 4000);
+    }
+    wasComplete.current = done;
+  }, [loaded, seen, count]);
+
   return (
     <section
       ref={rootRef}
@@ -79,6 +127,10 @@ export default function ItemsShowcase() {
           </a>
           <p className="showcase__counter">
             {active + 1} из {count}. {active === count - 1 ? "Это последний" : "Листайте дальше"}
+            <span className="showcase__collected">
+              {" "}
+              Собрано: {seen.length} из {count}
+            </span>
           </p>
         </div>
 
@@ -101,6 +153,7 @@ export default function ItemsShowcase() {
               <button
                 type="button"
                 aria-current={i === active ? "true" : undefined}
+                data-seen={seen.includes(it.name) || undefined}
                 onClick={() => jumpTo(i)}
               >
                 {it.source}
@@ -109,6 +162,11 @@ export default function ItemsShowcase() {
           ))}
         </ol>
       </div>
+      {complete && (
+        <p className="toast" role="status">
+          Коллекция собрана: вы увидели все {count} предметов
+        </p>
+      )}
     </section>
   );
 }
