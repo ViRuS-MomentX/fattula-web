@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
 import Cover from "@/components/Cover";
+import CoverMorph from "@/components/CoverMorph";
 import ItemsShowcase from "@/components/ItemsShowcase";
 import Marquee from "@/components/Marquee";
 import { getPosts, getProjects } from "@/lib/content";
@@ -77,7 +78,9 @@ export default function HomePage() {
             {projects.map((p) => (
               <li key={p.slug} className="mini-project spot">
                 <div className="mini-project__cover">
-                  <Cover seed={p.slug} src={p.cover} />
+                  <CoverMorph id={p.slug}>
+                    <Cover seed={p.slug} src={p.cover} />
+                  </CoverMorph>
                 </div>
                 <div>
                   <h3 className="mini-project__title">

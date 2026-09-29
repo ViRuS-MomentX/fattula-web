@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Cover from "@/components/Cover";
+import CoverMorph from "@/components/CoverMorph";
 import PostList from "@/components/PostList";
 import { getPosts } from "@/lib/content";
 import { formatDate, plural, withBase } from "@/lib/format";
@@ -45,7 +46,9 @@ export default function PostsPage() {
               </p>
             </div>
             <div className="featured-post__cover">
-              <Cover seed={featured.slug} src={featured.cover} />
+              <CoverMorph id={featured.slug}>
+                <Cover seed={featured.slug} src={featured.cover} />
+              </CoverMorph>
             </div>
           </article>
           {rest.length > 0 && <PostList posts={rest} />}

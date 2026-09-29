@@ -1548,6 +1548,20 @@ body::after {
   font-weight: 600;
 }
 
+/* ---------- Cover morph (View Transitions) ---------- */
+::view-transition-group(*) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;

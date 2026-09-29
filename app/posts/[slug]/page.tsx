@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReadingProgress from "@/components/ReadingProgress";
 import Cover from "@/components/Cover";
+import CoverMorph from "@/components/CoverMorph";
 import CodeCopy from "@/components/CodeCopy";
 import Lightbox from "@/components/Lightbox";
 import Toc from "@/components/Toc";
@@ -53,7 +54,9 @@ export default async function PostPage({ params }: Props) {
         Все посты
       </Link>
       <div className="article__cover">
-        <Cover seed={post.slug} src={post.cover} alt="" />
+        <CoverMorph id={post.slug}>
+          <Cover seed={post.slug} src={post.cover} alt="" />
+        </CoverMorph>
       </div>
       <header className="article__head">
         <h1 className="article__title">{post.title}</h1>

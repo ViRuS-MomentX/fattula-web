@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Cover from "@/components/Cover";
+import CoverMorph from "@/components/CoverMorph";
 import CodeCopy from "@/components/CodeCopy";
 import Lightbox from "@/components/Lightbox";
 import { BackIcon, ExternalIcon } from "@/components/Icons";
@@ -36,7 +37,9 @@ export default async function ProjectPage({ params }: Props) {
         {project.archived ? "Архив проектов" : "Все проекты"}
       </Link>
       <div className="article__cover">
-        <Cover seed={project.slug} src={project.cover} alt={project.title} />
+        <CoverMorph id={project.slug}>
+          <Cover seed={project.slug} src={project.cover} alt={project.title} />
+        </CoverMorph>
       </div>
       <header className="article__head">
         <h1 className="article__title">{project.title}</h1>

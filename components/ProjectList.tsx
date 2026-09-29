@@ -5,6 +5,7 @@ import { useState } from "react";
 import { formatDate } from "@/lib/format";
 import type { Project } from "@/lib/content";
 import Cover from "./Cover";
+import CoverMorph from "./CoverMorph";
 
 type Item = Omit<Project, "html">;
 
@@ -44,7 +45,9 @@ export default function ProjectList({ projects }: { projects: Item[] }) {
               </p>
             </div>
             <div className="project-row__cover">
-              <Cover seed={p.slug} src={p.cover} />
+              <CoverMorph id={p.slug}>
+                <Cover seed={p.slug} src={p.cover} />
+              </CoverMorph>
             </div>
           </li>
         ))}
