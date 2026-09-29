@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { withBase } from "@/lib/format";
 import { RssIcon } from "./Icons";
+import AccentPicker from "./AccentPicker";
 
 export default function Footer() {
   return (
@@ -19,6 +20,10 @@ export default function Footer() {
             <RssIcon size={16} />
             RSS-лента
           </a>
+        </div>
+        <div className="site-footer__col">
+          <p className="site-footer__title">Оттенок</p>
+          <AccentPicker />
         </div>
         <div className="site-footer__col site-footer__hint">
           <p className="site-footer__title">Подсказка</p>

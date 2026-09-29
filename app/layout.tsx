@@ -46,7 +46,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" className={`${display.variable} ${body.variable}`}>
+    <html lang="ru" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Apply the saved accent before first paint, so the page never flashes the default. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var a=localStorage.getItem("fattula:accent");if(a)document.documentElement.dataset.accent=a}catch(e){}`,
+          }}
+        />
+      </head>
       <body>
         <Backdrop />
         <a className="skip-link" href="#main">

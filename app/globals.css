@@ -161,7 +161,7 @@ code {
   left: -12vw;
   width: 62vw;
   height: 62vw;
-  background: radial-gradient(circle, #5b2fd1, transparent 65%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--violet-strong) 85%, #1a0b3a), transparent 65%);
   animation: drift-a 38s ease-in-out infinite alternate;
 }
 
@@ -1590,6 +1590,50 @@ button {
   .tabs__item:active {
     transform: scale(0.94);
   }
+}
+
+/* ---------- Accent shades ---------- */
+:root[data-accent="lavender"] {
+  --violet: #c3a6ff;
+  --violet-strong: #8f6bf0;
+  --lilac: #e6dbff;
+}
+
+:root[data-accent="orchid"] {
+  --violet: #d86be0;
+  --violet-strong: #a83bb5;
+  --lilac: #f4c6f6;
+}
+
+:root[data-accent="indigo"] {
+  --violet: #7f79ff;
+  --violet-strong: #4f45e0;
+  --lilac: #cfccff;
+}
+
+.accent-picker {
+  display: flex;
+  gap: 10px;
+}
+
+.accent-picker__swatch {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 3px var(--bg);
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.accent-picker__swatch:hover {
+  transform: scale(1.12);
+}
+
+.accent-picker__swatch[aria-pressed="true"] {
+  border-color: var(--swatch);
 }
 
 /* ---------- 404 ---------- */
