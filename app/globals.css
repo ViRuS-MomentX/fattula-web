@@ -1732,6 +1732,62 @@ button {
   }
 }
 
+/* ---------- Route progress ---------- */
+.route-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--violet-strong), var(--lilac));
+  box-shadow: 0 0 12px var(--violet);
+  transform-origin: left;
+  transform: scaleX(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.route-progress[data-state="loading"] {
+  opacity: 1;
+  transform: scaleX(0.7);
+  transition: transform 2.5s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+.route-progress[data-state="done"] {
+  opacity: 0;
+  transform: scaleX(1);
+  transition: transform 0.2s ease-out, opacity 0.3s 0.15s;
+}
+
+/* ---------- Heading anchors ---------- */
+.heading-anchor {
+  margin-left: 0.4em;
+  color: var(--violet);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.prose h2:hover .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+}
+
+.heading-anchor[data-copied]::after {
+  content: " скопировано";
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+@media (hover: none) {
+  .heading-anchor {
+    opacity: 0.6;
+  }
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;

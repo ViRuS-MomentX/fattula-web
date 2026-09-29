@@ -9,6 +9,7 @@ import BackToTop from "@/components/BackToTop";
 import Konami from "@/components/Konami";
 import Backdrop from "@/components/Backdrop";
 import Magnetic from "@/components/Magnetic";
+import RouteProgress from "@/components/RouteProgress";
 import { getSearchIndex } from "@/lib/content";
 import { SITE } from "@/lib/format";
 import "./globals.css";
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Backdrop />
+        <RouteProgress />
         <a className="skip-link" href="#main">
           Перейти к содержимому
         </a>
