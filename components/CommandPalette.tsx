@@ -1,11 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { SearchItem } from "@/lib/content";
 import { withBase } from "@/lib/format";
 import { OPEN_PALETTE_EVENT } from "./Header";
-import { SearchIcon } from "./Icons";
+import { ClockIcon, CompassIcon, PostsIcon, ProjectsIcon, SearchIcon } from "./Icons";
 
 const PAGES: SearchItem[] = [
   { href: "/", title: "Главная", hint: "Раздел", keywords: "домой старт" },
@@ -16,6 +16,20 @@ const PAGES: SearchItem[] = [
 ];
 
 const norm = (s: string) => s.toLowerCase().replaceAll("ё", "е");
+
+const GROUPS = ["Недавнее", "Посты", "Проекты", "Разделы"] as const;
+type Group = (typeof GROUPS)[number];
+
+const groupOf = (item: SearchItem): Group =>
+  item.hint === "Недавнее"
+    ? "Недавнее"
+    : item.hint === "Пост"
+      ? "Посты"
+      : item.hint.startsWith("Проект")
+        ? "Проекты"
+        : "Разделы";
+
+const GROUP_ICON = { Недавнее: ClockIcon, Посты: PostsIcon, Проекты: ProjectsIcon, Разделы: CompassIcon };
 
 const RECENT_KEY = "fattula:recent";
 const readRecent = (): string[] => {
@@ -67,7 +81,10 @@ export default function CommandPalette({ items }: { items: SearchItem[] }) {
         return { item, score };
       })
       .filter((r) => r.score > 0)
-      .sort((a, b) => b.score - a.score)
+      .sort(
+        (a, b) =>
+          GROUPS.indexOf(groupOf(a.item)) - GROUPS.indexOf(groupOf(b.item)) || b.score - a.score,
+      )
       .map((r) => r.item);
   }, [all, query, recent]);
 
@@ -176,20 +193,34 @@ export default function CommandPalette({ items }: { items: SearchItem[] }) {
 
         {results.length ? (
           <ul className="palette__list" id="palette-list" role="listbox">
-            {results.map((item, i) => (
-              <li
-                key={item.href}
-                id={`palette-option-${i}`}
-                role="option"
-                aria-selected={i === active}
-                className="palette__option"
-                onMouseMove={() => setActive(i)}
-                onClick={() => go(item)}
-              >
-                <span className="palette__title">{item.title}</span>
-                <span className="palette__hint">{item.hint}</span>
-              </li>
-            ))}
+            {results.map((item, i) => {
+              const group = groupOf(item);
+              const Icon = GROUP_ICON[group];
+              const first = i === 0 || groupOf(results[i - 1]) !== group;
+              return (
+                <Fragment key={item.href + group}>
+                  {first && (
+                    <li className="palette__group" role="presentation">
+                      {group}
+                    </li>
+                  )}
+                  <li
+                    id={`palette-option-${i}`}
+                    role="option"
+                    aria-selected={i === active}
+                    className="palette__option"
+                    onMouseMove={() => setActive(i)}
+                    onClick={() => go(item)}
+                  >
+                    <Icon />
+                    <span className="palette__title">{item.title}</span>
+                    {group === "Проекты" && item.hint !== "Проект" && (
+                      <span className="palette__hint">{item.hint}</span>
+                    )}
+                  </li>
+                </Fragment>
+              );
+            })}
           </ul>
         ) : (
           <p className="palette__empty">

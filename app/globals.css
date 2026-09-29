@@ -1706,11 +1706,17 @@ button {
   list-style: none;
 }
 
+.palette__group {
+  padding: 12px 12px 6px;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
 .palette__option {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   padding: 10px 12px;
   border-radius: 10px;
   cursor: pointer;
@@ -1718,6 +1724,19 @@ button {
 
 .palette__option[aria-selected="true"] {
   background: color-mix(in oklab, var(--violet) 22%, transparent);
+}
+
+.palette__option svg {
+  flex-shrink: 0;
+  color: var(--text-dim);
+}
+
+.palette__option[aria-selected="true"] svg {
+  color: var(--lilac);
+}
+
+.palette__title {
+  flex: 1;
 }
 
 .palette__hint {

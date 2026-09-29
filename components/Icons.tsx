@@ -66,3 +66,17 @@ export const ProjectsIcon = ({ size = 20 }: IconProps) => (
     <rect x="13" y="13" width="7" height="7" rx="1.5" />
   </svg>
 );
+
+export const ClockIcon = ({ size = 18 }: IconProps) => (
+  <svg {...base(size)}>
+    <circle cx="12" cy="12" r="8" />
+    <path d="M12 8v4l2.5 2.5" />
+  </svg>
+);
+
+export const CompassIcon = ({ size = 18 }: IconProps) => (
+  <svg {...base(size)}>
+    <circle cx="12" cy="12" r="8" />
+    <path d="m15 9-2 4-4 2 2-4Z" />
+  </svg>
+);
