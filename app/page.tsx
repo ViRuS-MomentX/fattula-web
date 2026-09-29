@@ -43,13 +43,12 @@ export default function HomePage() {
         </div>
         <a href="#showcase-heading" className="scroll-cue">
           <span className="scroll-cue__mouse" aria-hidden="true" />
-          Листайте вниз: там вещи из игр и сериалов
+          Ниже: вещи из игр и сериалов
         </a>
       </section>
 
       <ItemsShowcase />
 
-      <div id="after-showcase" tabIndex={-1} />
     </div>
 
     {/* Outside .page so it spans the full window without any 100vw tricks. */}

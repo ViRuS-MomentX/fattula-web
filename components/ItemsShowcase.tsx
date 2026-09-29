@@ -1,26 +1,53 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ITEMS } from "./showcase-items";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ITEMS, type ShowcaseItem } from "./showcase-items";
 import { useSpin } from "./useSpin";
 import { sounds } from "@/lib/sound";
 
 const SEEN_KEY = "fattula:showcase-seen";
 
+function Slide({ item, index, count }: { item: ShowcaseItem; index: number; count: number }) {
+  const artRef = useSpin<HTMLDivElement>();
+  return (
+    <div
+      className="carousel__slide"
+      role="group"
+      aria-roledescription="слайд"
+      aria-label={`${index + 1} из ${count}: ${item.name}`}
+      style={{ "--glow": item.glow } as React.CSSProperties}
+    >
+      <div className="carousel__text">
+        <p className="carousel__source">
+          {item.source}
+          <span className="tag">{item.kind}</span>
+        </p>
+        <h3 className="carousel__name">{item.name}</h3>
+        <p className="carousel__fact">{item.fact}</p>
+      </div>
+      <div className="carousel__art" ref={artRef} aria-hidden="true" title="Потяните, чтобы покрутить">
+        <div className="carousel__orb" />
+        <div className="carousel__spin">{item.art}</div>
+      </div>
+    </div>
+  );
+}
+
 /**
- * Scroll-driven showcase: the stage sticks to the viewport while the section
- * scrolls past, and each slice of the scroll shows the next item.
+ * Horizontal carousel of items. The page scrolls normally; items change by
+ * swiping, the arrow buttons, the dots or the left/right keys. Slides tilt
+ * and fade as they pass, and an item counts as collected once it is centred.
  */
 export default function ItemsShowcase() {
-  const rootRef = useRef<HTMLElement>(null);
-  const stageRef = useSpin<HTMLDivElement>();
-  const [active, setActive] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const count = ITEMS.length;
-  const wasComplete = useRef(false);
-  const heardCount = useRef<number | null>(null);
+  const [active, setActive] = useState(0);
   const [seen, setSeen] = useState<string[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [complete, setComplete] = useState(false);
+  const wasComplete = useRef(false);
+  const heardCount = useRef<number | null>(null);
 
   // Restore the collection from this browser before anything is saved.
   useEffect(() => {
@@ -38,53 +65,56 @@ export default function ItemsShowcase() {
     setLoaded(true);
   }, []);
 
+  // Track scroll: find the centred slide and give every slide its offset.
   useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
+    const track = trackRef.current;
+    if (!track) return;
+    const slides = Array.from(track.children) as HTMLElement[];
     let frame = 0;
 
     const update = () => {
       frame = 0;
-      const rect = root.getBoundingClientRect();
-      const travel = rect.height - window.innerHeight;
-      const progress = travel > 0 ? Math.min(1, Math.max(0, -rect.top / travel)) : 0;
-      const raw = progress * count;
-      const index = Math.min(count - 1, Math.floor(raw));
-      root.style.setProperty("--local", (raw - index).toFixed(3));
-      setActive(index);
+      const width = track.clientWidth || 1;
+      const pos = track.scrollLeft / width;
+      slides.forEach((slide, i) => {
+        const offset = Math.max(-1, Math.min(1, i - pos));
+        slide.style.setProperty("--o", offset.toFixed(3));
+        slide.style.setProperty("--a", Math.abs(offset).toFixed(3));
+      });
+      setActive(Math.min(count - 1, Math.max(0, Math.round(pos))));
     };
     const queue = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
 
     update();
-    window.addEventListener("scroll", queue, { passive: true });
+    track.addEventListener("scroll", queue, { passive: true });
     window.addEventListener("resize", queue);
     return () => {
       cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", queue);
+      track.removeEventListener("scroll", queue);
       window.removeEventListener("resize", queue);
     };
   }, [count]);
 
-  const jumpTo = (i: number) => {
-    const root = rootRef.current;
-    if (!root) return;
-    const top = root.getBoundingClientRect().top + window.scrollY;
-    const travel = root.offsetHeight - window.innerHeight;
-    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.scrollTo({ top: top + ((i + 0.5) / count) * travel, behavior: smooth ? "smooth" : "auto" });
-  };
-
   const item = ITEMS[active];
 
-  // An item counts as collected once it has been on stage.
+  useEffect(() => {
+    sectionRef.current?.style.setProperty("--glow", item.glow);
+  }, [item.glow]);
+
+  // An item counts as collected once it has stayed centred for a moment, so
+  // flying past it with a long swipe or a dot click does not collect it.
   useEffect(() => {
     if (!loaded) return;
-    setSeen((prev) => (prev.includes(item.name) ? prev : [...prev, item.name]));
+    const timer = setTimeout(
+      () => setSeen((prev) => (prev.includes(item.name) ? prev : [...prev, item.name])),
+      450,
+    );
+    return () => clearTimeout(timer);
   }, [loaded, item.name]);
 
-  // A blip whenever a new item joins the collection. The first render after
+  // A blip whenever a new item joins the collection. The first pass after
   // loading only records the count, so opening the page stays silent.
   useEffect(() => {
     if (!loaded) return;
@@ -112,66 +142,103 @@ export default function ItemsShowcase() {
     wasComplete.current = done;
   }, [loaded, seen, count]);
 
+  const goTo = useCallback(
+    (i: number) => {
+      const track = trackRef.current;
+      if (!track) return;
+      const next = Math.min(count - 1, Math.max(0, i));
+      const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      track.scrollTo({ left: next * track.clientWidth, behavior: smooth ? "smooth" : "auto" });
+    },
+    [count],
+  );
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const target: Record<string, number> = {
+      ArrowRight: active + 1,
+      ArrowLeft: active - 1,
+      Home: 0,
+      End: count - 1,
+    };
+    if (e.key in target) {
+      e.preventDefault();
+      goTo(target[e.key]);
+    }
+  };
+
   return (
     <section
-      ref={rootRef}
-      className="showcase"
+      ref={sectionRef}
+      className="carousel"
       aria-labelledby="showcase-heading"
-      style={{ "--count": count, "--glow": item.glow } as React.CSSProperties}
+      style={{ "--glow": ITEMS[0].glow } as React.CSSProperties}
     >
-      <div className="showcase__sticky">
-        <div className="showcase__text">
-          <h2 className="section-title" id="showcase-heading">
-            Вещи из любимых миров
-          </h2>
-          <div className="showcase__caption" key={active} aria-live="polite">
-            <p className="showcase__source">
-              {item.source}
-              <span className="tag">{item.kind}</span>
-            </p>
-            <h3 className="showcase__name">{item.name}</h3>
-            <p className="showcase__fact">{item.fact}</p>
-          </div>
-          <a href="#after-showcase" className="showcase__skip">
-            Пропустить подборку
-          </a>
-          <p className="showcase__counter">
-            {active + 1} из {count}. {active === count - 1 ? "Это последний" : "Листайте дальше"}
-            <span className="showcase__collected">
-              {" "}
-              Собрано: {seen.length} из {count}
-            </span>
-          </p>
-        </div>
-
-        <div className="showcase__stage" aria-hidden="true" ref={stageRef} title="Потяните, чтобы покрутить">
-          <div className="showcase__orb" />
-          {ITEMS.map((it, i) => (
-            <div
-              key={it.name}
-              className="showcase__item"
-              data-state={i === active ? "active" : i < active ? "past" : "next"}
-            >
-              <div className="showcase__spin">{it.art}</div>
-            </div>
-          ))}
-        </div>
-
-        <ol className="showcase__index" aria-label="Все предметы">
-          {ITEMS.map((it, i) => (
-            <li key={it.name}>
-              <button
-                type="button"
-                aria-current={i === active ? "true" : undefined}
-                data-seen={seen.includes(it.name) || undefined}
-                onClick={() => jumpTo(i)}
-              >
-                {it.source}
-              </button>
-            </li>
-          ))}
-        </ol>
+      <div className="carousel__head">
+        <h2 className="section-title" id="showcase-heading">
+          Вещи из любимых миров
+        </h2>
+        <p className="carousel__collected" aria-live="polite">
+          Собрано: {seen.length} из {count}
+        </p>
       </div>
+
+      <div className="carousel__frame">
+        <div
+          className="carousel__track"
+          ref={trackRef}
+          tabIndex={0}
+          role="region"
+          aria-roledescription="карусель"
+          aria-label="Предметы из игр и сериалов. Листайте стрелками влево и вправо."
+          onKeyDown={onKeyDown}
+        >
+          {ITEMS.map((it, i) => (
+            <Slide key={it.name} item={it} index={i} count={count} />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          className="carousel__arrow carousel__arrow--prev"
+          onClick={() => goTo(active - 1)}
+          disabled={active === 0}
+          aria-label="Предыдущий предмет"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 5l-7 7 7 7" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          className="carousel__arrow carousel__arrow--next"
+          onClick={() => goTo(active + 1)}
+          disabled={active === count - 1}
+          aria-label="Следующий предмет"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <ol className="carousel__dots" aria-label="Все предметы">
+        {ITEMS.map((it, i) => (
+          <li key={it.name}>
+            <button
+              type="button"
+              aria-label={`${it.name}, ${it.source}`}
+              aria-current={i === active ? "true" : undefined}
+              data-seen={seen.includes(it.name) || undefined}
+              onClick={() => goTo(i)}
+            />
+          </li>
+        ))}
+      </ol>
+
+      <p className="sr-only" aria-live="polite">
+        {item.name}, {item.source}. {active + 1} из {count}.
+      </p>
+
       {complete && (
         <p className="toast" role="status">
           Коллекция собрана: вы увидели все {count} предметов
