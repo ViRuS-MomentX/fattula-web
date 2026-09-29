@@ -200,6 +200,6 @@ export const ITEMS: ShowcaseItem[] = [
     kind: "Мем",
     fact: "Лично проверяет каждый пиксель. Если вы долистали досюда, он вами доволен.",
     glow: "#d9985f",
-    art: <img className="showcase__photo" src={withBase("/images/owner.png")} alt="" />,
+    art: <img className="showcase__photo" src={withBase("/images/owner.webp")} alt="" loading="lazy" decoding="async" />,
   },
 ];
