@@ -1636,6 +1636,102 @@ button {
   border-color: var(--swatch);
 }
 
+/* ---------- Project case layout ---------- */
+.project-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 760px) 280px;
+  justify-content: space-between;
+  gap: 56px;
+}
+
+.project-info {
+  padding-top: 52px;
+}
+
+.project-info__card {
+  position: sticky;
+  top: calc(var(--header-h) + 32px);
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: color-mix(in oklab, var(--bg-raised) 80%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.project-info__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.project-info dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.project-info dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-sm);
+}
+
+.project-info dt {
+  color: var(--text-dim);
+}
+
+.project-info dd {
+  margin: 0;
+  text-align: right;
+}
+
+.project-info .button,
+.project-info .share-button {
+  justify-content: center;
+  width: 100%;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #5fe0a0;
+  box-shadow: 0 0 0 3px color-mix(in oklab, #5fe0a0 25%, transparent);
+}
+
+.status--done::before {
+  background: var(--text-dim);
+  box-shadow: none;
+}
+
+@media (max-width: 1024px) {
+  .project-layout {
+    grid-template-columns: minmax(0, 760px);
+    justify-content: start;
+    gap: 0;
+  }
+
+  .project-info {
+    padding-top: 0;
+  }
+
+  .project-info__card {
+    position: static;
+    margin-top: 40px;
+  }
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;

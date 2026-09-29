@@ -5,6 +5,7 @@ import Cover from "@/components/Cover";
 import CoverMorph from "@/components/CoverMorph";
 import CodeCopy from "@/components/CodeCopy";
 import Lightbox from "@/components/Lightbox";
+import ShareButton from "@/components/ShareButton";
 import { BackIcon, ExternalIcon } from "@/components/Icons";
 import { getProject, getProjects } from "@/lib/content";
 import { formatDate } from "@/lib/format";
@@ -29,7 +30,8 @@ export default async function ProjectPage({ params }: Props) {
   const neighbours = [siblings[index + 1], siblings[index - 1]].filter(Boolean);
 
   return (
-    <article className="page article">
+    <div className="page project-layout">
+      <article className="article">
       <CodeCopy />
       <Lightbox />
       <Link href={project.archived ? "/projects/archive" : "/projects"} className="back-link">
@@ -43,20 +45,7 @@ export default async function ProjectPage({ params }: Props) {
       </div>
       <header className="article__head">
         <h1 className="article__title">{project.title}</h1>
-        <p className="meta">
-          <time dateTime={project.date}>{formatDate(project.date)}</time>
-          <span className="tag">{project.category}</span>
-          {project.archived && <span className="tag tag--muted">В архиве</span>}
-        </p>
         <p className="lead">{project.excerpt}</p>
-        {project.link && (
-          <p>
-            <a href={project.link} className="button button--primary button--icon" target="_blank" rel="noreferrer">
-              Открыть проект
-              <ExternalIcon />
-            </a>
-          </p>
-        )}
       </header>
       <div className="prose" dangerouslySetInnerHTML={{ __html: project.html }} />
 
@@ -86,6 +75,40 @@ export default async function ProjectPage({ params }: Props) {
           </ul>
         </nav>
       )}
-    </article>
+      </article>
+
+      <aside className="project-info" aria-label="О проекте">
+        <div className="project-info__card">
+          <p className="project-info__title">О проекте</p>
+          <dl>
+            <div>
+              <dt>Дата</dt>
+              <dd>
+                <time dateTime={project.date}>{formatDate(project.date)}</time>
+              </dd>
+            </div>
+            <div>
+              <dt>Категория</dt>
+              <dd>{project.category}</dd>
+            </div>
+            <div>
+              <dt>Статус</dt>
+              <dd>
+                <span className={project.archived ? "status status--done" : "status"}>
+                  {project.archived ? "В архиве" : "Активный"}
+                </span>
+              </dd>
+            </div>
+          </dl>
+          {project.link && (
+            <a href={project.link} className="button button--primary button--icon" target="_blank" rel="noreferrer">
+              Открыть проект
+              <ExternalIcon />
+            </a>
+          )}
+          <ShareButton title={project.title} />
+        </div>
+      </aside>
+    </div>
   );
 }
