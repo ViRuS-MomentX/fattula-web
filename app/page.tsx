@@ -40,6 +40,7 @@ export default function HomePage() {
 
       <ItemsShowcase />
 
+      <div id="after-showcase" tabIndex={-1} />
       <Marquee items={topics} />
 
       <div className="home__grid">

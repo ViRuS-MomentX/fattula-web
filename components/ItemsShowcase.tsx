@@ -72,6 +72,9 @@ export default function ItemsShowcase() {
             <h3 className="showcase__name">{item.name}</h3>
             <p className="showcase__fact">{item.fact}</p>
           </div>
+          <a href="#after-showcase" className="showcase__skip">
+            Пропустить подборку
+          </a>
           <p className="showcase__counter">
             {active + 1} из {count}. {active === count - 1 ? "Это последний" : "Листайте дальше"}
           </p>

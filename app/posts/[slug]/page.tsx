@@ -7,6 +7,7 @@ import CoverMorph from "@/components/CoverMorph";
 import CodeCopy from "@/components/CodeCopy";
 import Lightbox from "@/components/Lightbox";
 import HeadingAnchors from "@/components/HeadingAnchors";
+import ResumeReading from "@/components/ResumeReading";
 import Toc from "@/components/Toc";
 import ShareButton from "@/components/ShareButton";
 import { BackIcon } from "@/components/Icons";
@@ -50,6 +51,7 @@ export default async function PostPage({ params }: Props) {
       <CodeCopy />
       <Lightbox />
       <HeadingAnchors />
+      <ResumeReading slug={post.slug} />
       <article className="article">
       <Link href="/posts" className="back-link">
         <BackIcon size={16} />
