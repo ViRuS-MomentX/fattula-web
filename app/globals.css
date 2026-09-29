@@ -40,6 +40,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scrollbar-color: var(--line) var(--bg);
+  scroll-padding-top: calc(var(--header-h, 64px) + 16px);
   accent-color: var(--accent, var(--lilac));
   caret-color: var(--lilac);
 }
