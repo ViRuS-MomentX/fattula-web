@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#150c21",
-  colorScheme: "dark",
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Apply the saved accent before first paint, so the page never flashes the default. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var a=localStorage.getItem("fattula:accent");if(a)document.documentElement.dataset.accent=a}catch(e){}`,
+            __html: `try{var d=document.documentElement,a=localStorage.getItem("fattula:accent"),t=localStorage.getItem("fattula:theme");if(a)d.dataset.accent=a;if(t==="light")d.dataset.theme="light"}catch(e){}`,
           }}
         />
       </head>

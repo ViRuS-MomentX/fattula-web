@@ -2,6 +2,7 @@ import Link from "next/link";
 import { withBase } from "@/lib/format";
 import { RssIcon } from "./Icons";
 import AccentPicker from "./AccentPicker";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Footer() {
   return (
@@ -22,7 +23,8 @@ export default function Footer() {
           </a>
         </div>
         <div className="site-footer__col">
-          <p className="site-footer__title">Оттенок</p>
+          <p className="site-footer__title">Оформление</p>
+          <ThemeToggle />
           <AccentPicker />
         </div>
         <div className="site-footer__col site-footer__hint">
