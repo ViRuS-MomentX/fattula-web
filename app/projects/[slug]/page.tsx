@@ -22,6 +22,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProjectPage({ params }: Props) {
   const project = getProject((await params).slug);
   if (!project) notFound();
+  const siblings = getProjects({ archived: project.archived });
+  const index = siblings.findIndex((p) => p.slug === project.slug);
+  const neighbours = [siblings[index + 1], siblings[index - 1]].filter(Boolean);
 
   return (
     <article className="page article">
@@ -51,6 +54,33 @@ export default async function ProjectPage({ params }: Props) {
         )}
       </header>
       <div className="prose" dangerouslySetInnerHTML={{ __html: project.html }} />
+
+      {neighbours.length > 0 && (
+        <nav className="more-projects" aria-labelledby="more-projects-title">
+          <h2 className="section-title" id="more-projects-title">
+            Другие проекты
+          </h2>
+          <ul>
+            {neighbours.map((p) => (
+              <li key={p.slug} className="more-projects__item spot">
+                <div className="more-projects__cover">
+                  <Cover seed={p.slug} src={p.cover} />
+                </div>
+                <div>
+                  <h3 className="more-projects__title">
+                    <Link href={`/projects/${p.slug}`} className="stretched">
+                      {p.title}
+                    </Link>
+                  </h3>
+                  <p className="meta">
+                    <span className="tag">{p.category}</span>
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </article>
   );
 }

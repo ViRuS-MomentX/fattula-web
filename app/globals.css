@@ -141,9 +141,24 @@ code {
   position: sticky;
   top: 0;
   z-index: 20;
+  border-bottom: 1px solid color-mix(in oklab, var(--line) 60%, transparent);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Blur lives on a pseudo-element: backdrop-filter on the header itself would
+   trap the fixed mobile tab bar inside it. */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: color-mix(in oklab, var(--bg) 82%, transparent);
   backdrop-filter: blur(14px);
-  border-bottom: 1px solid color-mix(in oklab, var(--line) 60%, transparent);
+}
+
+.site-header[data-scrolled="true"] {
+  border-bottom-color: var(--line);
+  box-shadow: 0 10px 30px -18px rgb(0 0 0 / 0.8);
 }
 
 .site-header__inner {
@@ -184,6 +199,9 @@ code {
 }
 
 .tabs__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   padding: 6px 16px;
   border-radius: 999px;
   color: var(--text-dim);
@@ -191,6 +209,10 @@ code {
   font-weight: 500;
   text-decoration: none;
   transition: color 0.15s, background-color 0.15s;
+}
+
+.tabs__item svg {
+  display: none;
 }
 
 .tabs__item:hover {
@@ -1243,6 +1265,50 @@ body::after {
   }
 }
 
+/* ---------- More projects ---------- */
+.more-projects {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.more-projects ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.more-projects__item {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  transition: border-color 0.15s;
+}
+
+.more-projects__item:hover {
+  border-color: var(--violet);
+}
+
+.more-projects__cover {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.more-projects__title {
+  margin-bottom: 6px;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;
@@ -1431,24 +1497,50 @@ body::after {
 
 @media (max-width: 640px) {
   :root {
-    --header-h: 111px;
+    --header-h: 59px;
+    --tabbar-h: 64px;
   }
 
-  .site-header__inner {
-    flex-wrap: wrap;
-    gap: 10px;
+  body {
+    padding-bottom: calc(var(--tabbar-h) + 16px + env(safe-area-inset-bottom));
   }
 
+  /* App-style tab bar pinned to the bottom, within thumb reach. */
   .tabs {
-    order: 3;
-    width: 100%;
-    margin-left: 0;
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    z-index: 30;
+    height: var(--tabbar-h);
+    margin: 0;
+    padding: 6px;
+    border-radius: 22px;
+    background: color-mix(in oklab, var(--bg-raised) 90%, transparent);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 16px 40px -12px rgb(0 0 0 / 0.8);
   }
 
   .tabs__item {
     flex: 1;
-    text-align: center;
-    padding: 6px 8px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 16px;
+    font-size: 0.75rem;
+  }
+
+  .tabs__item svg {
+    display: block;
+  }
+
+  .to-top {
+    bottom: calc(var(--tabbar-h) + 24px + env(safe-area-inset-bottom));
+  }
+
+  .toast {
+    bottom: calc(var(--tabbar-h) + 28px);
   }
 
   .search-trigger {

@@ -44,3 +44,25 @@ export const ExternalIcon = ({ size = 16 }: IconProps) => (
     <path d="M14 5h5v5M19 5l-8 8M18 14v4.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10" />
   </svg>
 );
+
+export const HomeIcon = ({ size = 20 }: IconProps) => (
+  <svg {...base(size)}>
+    <path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1Z" />
+  </svg>
+);
+
+export const PostsIcon = ({ size = 20 }: IconProps) => (
+  <svg {...base(size)}>
+    <rect x="5" y="3.5" width="14" height="17" rx="2" />
+    <path d="M8.5 8h7M8.5 12h7M8.5 16h4" />
+  </svg>
+);
+
+export const ProjectsIcon = ({ size = 20 }: IconProps) => (
+  <svg {...base(size)}>
+    <rect x="4" y="4" width="7" height="7" rx="1.5" />
+    <rect x="13" y="4" width="7" height="7" rx="1.5" />
+    <rect x="4" y="13" width="7" height="7" rx="1.5" />
+    <rect x="13" y="13" width="7" height="7" rx="1.5" />
+  </svg>
+);
