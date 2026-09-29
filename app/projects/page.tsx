@@ -1,3 +1,4 @@
+import Scramble from "@/components/Scramble";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { withBase } from "@/lib/format";
@@ -14,7 +15,9 @@ export default function ProjectsPage() {
     <div className="page">
       <header className="page-head page-head--split">
         <div>
-          <h1 className="page-title">Проекты</h1>
+          <h1 className="page-title">
+          <Scramble text="Проекты" />
+        </h1>
           <p className="page-sub">
             Подписаться на <Link href="/posts">посты</Link> и <a href={withBase("/rss.xml")}>RSS-ленту</a>
           </p>

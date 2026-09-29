@@ -138,6 +138,13 @@ export default function Wordmark({ word = "fattula", as: Tag = "h1" }: { word?: 
           className="wordmark__letter"
           aria-hidden="true"
           style={{ "--i": i } as React.CSSProperties}
+          onClick={(e) => {
+            const el = e.currentTarget;
+            el.classList.remove("wordmark__letter--pop");
+            void el.offsetWidth; // restart the animation on repeated clicks
+            el.classList.add("wordmark__letter--pop");
+          }}
+          onAnimationEnd={(e) => e.currentTarget.classList.remove("wordmark__letter--pop")}
         >
           {ch}
         </span>

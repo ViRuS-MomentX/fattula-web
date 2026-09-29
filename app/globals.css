@@ -2247,6 +2247,56 @@ button {
   }
 }
 
+/* ---------- Wordmark pop ---------- */
+.wordmark {
+  user-select: none;
+}
+
+.wordmark__letter {
+  position: relative;
+  cursor: pointer;
+}
+
+.wordmark__letter--pop {
+  animation: letter-pop 0.6s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.wordmark__letter--pop::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.2em;
+  height: 1.2em;
+  margin: -0.6em 0 0 -0.6em;
+  border-radius: 50%;
+  border: 2px solid var(--lilac);
+  animation: letter-spark 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes letter-pop {
+  30% {
+    translate: 0 -0.22em;
+    scale: 1.08 0.92;
+  }
+  60% {
+    translate: 0 0.02em;
+    scale: 0.96 1.04;
+  }
+}
+
+@keyframes letter-spark {
+  from {
+    opacity: 0.9;
+    scale: 0.3;
+  }
+  to {
+    opacity: 0;
+    scale: 1.4;
+  }
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;

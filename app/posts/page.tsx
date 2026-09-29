@@ -1,3 +1,4 @@
+import Scramble from "@/components/Scramble";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Cover from "@/components/Cover";
@@ -15,7 +16,9 @@ export default function PostsPage() {
   return (
     <div className="page">
       <header className="page-head">
-        <h1 className="page-title">Посты</h1>
+        <h1 className="page-title">
+          <Scramble text="Посты" />
+        </h1>
         <p className="page-sub">
           {posts.length} {plural(posts.length, "пост", "поста", "постов")}. Подписаться можно через{" "}
           <a href={withBase("/rss.xml")}>RSS-ленту</a>.

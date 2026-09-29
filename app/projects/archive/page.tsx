@@ -1,3 +1,4 @@
+import Scramble from "@/components/Scramble";
 import type { Metadata } from "next";
 import Link from "next/link";
 import ProjectList from "@/components/ProjectList";
@@ -16,7 +17,9 @@ export default function ArchivePage() {
         Текущие проекты
       </Link>
       <header className="page-head">
-        <h1 className="page-title">Архив</h1>
+        <h1 className="page-title">
+          <Scramble text="Архив" />
+        </h1>
         <p className="page-sub">Завершённые и старые проекты. Они больше не обновляются, но остаются здесь для истории.</p>
       </header>
       {projects.length ? (
