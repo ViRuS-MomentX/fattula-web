@@ -2655,6 +2655,94 @@ button {
   pointer-events: none;
 }
 
+/* ---------- Calm mode (effects off) ---------- */
+:root[data-fx="off"],
+:root[data-fx="off"] * {
+  cursor: auto !important;
+}
+
+:root[data-fx="off"] a,
+:root[data-fx="off"] button,
+:root[data-fx="off"] .accent-picker__swatch {
+  cursor: pointer !important;
+}
+
+:root[data-fx="off"] *,
+:root[data-fx="off"] *::before,
+:root[data-fx="off"] *::after {
+  animation: none !important;
+  transition-duration: 0s !important;
+  scroll-behavior: auto !important;
+}
+
+:root[data-fx="off"] .cursor-dot,
+:root[data-fx="off"] .cursor-ring,
+:root[data-fx="off"] .shapes,
+:root[data-fx="off"] .sparkle-trail,
+:root[data-fx="off"] .scroll-cue__mouse::after {
+  display: none;
+}
+
+:root[data-fx="off"] .button,
+:root[data-fx="off"] .chip,
+:root[data-fx="off"] .search-trigger,
+:root[data-fx="off"] .project-row__cover,
+:root[data-fx="off"] .featured-post__cover {
+  transform: none !important;
+}
+
+:root[data-fx="off"] .project-row__cover::after,
+:root[data-fx="off"] .featured-post__cover::after {
+  display: none;
+}
+
+.fx-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-dim);
+  font: inherit;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+}
+
+.fx-toggle:hover {
+  color: var(--text);
+}
+
+.fx-toggle__track {
+  display: inline-flex;
+  width: 38px;
+  height: 22px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-raised);
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.fx-toggle__thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition: translate 0.2s, background-color 0.2s;
+}
+
+.fx-toggle[aria-checked="true"] .fx-toggle__track {
+  border-color: var(--violet);
+  background: color-mix(in oklab, var(--violet) 28%, var(--bg-raised));
+}
+
+.fx-toggle[aria-checked="true"] .fx-toggle__thumb {
+  translate: 16px 0;
+  background: var(--lilac);
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;

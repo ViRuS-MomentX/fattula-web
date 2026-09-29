@@ -3,6 +3,7 @@ import { withBase } from "@/lib/format";
 import { RssIcon } from "./Icons";
 import AccentPicker from "./AccentPicker";
 import ThemeToggle from "./ThemeToggle";
+import EffectsToggle from "./EffectsToggle";
 
 export default function Footer() {
   return (
@@ -26,6 +27,7 @@ export default function Footer() {
           <p className="site-footer__title">Оформление</p>
           <ThemeToggle />
           <AccentPicker />
+          <EffectsToggle />
         </div>
         <div className="site-footer__col site-footer__hint">
           <p className="site-footer__title">Подсказка</p>

@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Apply the saved accent before first paint, so the page never flashes the default. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var d=document.documentElement,a=localStorage.getItem("fattula:accent"),t=localStorage.getItem("fattula:theme");if(a)d.dataset.accent=a;if(t==="light")d.dataset.theme="light"}catch(e){}`,
+            __html: `try{var d=document.documentElement,a=localStorage.getItem("fattula:accent"),t=localStorage.getItem("fattula:theme");if(a)d.dataset.accent=a;if(t==="light")d.dataset.theme="light";if(localStorage.getItem("fattula:fx")==="off")d.dataset.fx="off"}catch(e){}`,
           }}
         />
       </head>
