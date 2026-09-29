@@ -7,6 +7,7 @@ import Spotlight from "@/components/Spotlight";
 import KeyboardNav from "@/components/KeyboardNav";
 import BackToTop from "@/components/BackToTop";
 import Konami from "@/components/Konami";
+import Backdrop from "@/components/Backdrop";
 import { getSearchIndex } from "@/lib/content";
 import { SITE } from "@/lib/format";
 import "./globals.css";
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru" className={`${display.variable} ${body.variable}`}>
       <body>
+        <Backdrop />
         <a className="skip-link" href="#main">
           Перейти к содержимому
         </a>
