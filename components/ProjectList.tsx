@@ -37,30 +37,32 @@ export default function ProjectList({ projects }: { projects: Item[] }) {
 
   return (
     <>
-      <div className="list-toolbar">
-      {categories.length > 1 && (
-        <div className="chips" role="group" aria-label="Фильтр по категории">
-          <button type="button" className="chip" aria-pressed={category === null} onClick={() => setCategory(null)}>
-            Все
-          </button>
-          {categories.map((c) => (
-            <button key={c} type="button" className="chip" aria-pressed={category === c} onClick={() => setCategory(c)}>
-              {c}
+      {projects.length > 1 && (
+        <div className="list-toolbar">
+          {categories.length > 1 && (
+            <div className="chips" role="group" aria-label="Фильтр по категории">
+              <button type="button" className="chip" aria-pressed={category === null} onClick={() => setCategory(null)}>
+                Все
+              </button>
+              {categories.map((c) => (
+                <button key={c} type="button" className="chip" aria-pressed={category === c} onClick={() => setCategory(c)}>
+                  {c}
+                </button>
+              ))}
+            </div>
+          )}
+          <div className="view-toggle" role="group" aria-label="Вид списка">
+            <button type="button" aria-pressed={view === "list"} onClick={() => choose("list")} title="Список">
+              <ListIcon />
+              <span className="sr-only">Список</span>
             </button>
-          ))}
+            <button type="button" aria-pressed={view === "grid"} onClick={() => choose("grid")} title="Сетка">
+              <ProjectsIcon size={18} />
+              <span className="sr-only">Сетка</span>
+            </button>
+          </div>
         </div>
       )}
-        <div className="view-toggle" role="group" aria-label="Вид списка">
-          <button type="button" aria-pressed={view === "list"} onClick={() => choose("list")} title="Список">
-            <ListIcon />
-            <span className="sr-only">Список</span>
-          </button>
-          <button type="button" aria-pressed={view === "grid"} onClick={() => choose("grid")} title="Сетка">
-            <ProjectsIcon size={18} />
-            <span className="sr-only">Сетка</span>
-          </button>
-        </div>
-      </div>
 
       <ul className={`project-list project-list--${view}`}>
         {shown.map((p) => (
