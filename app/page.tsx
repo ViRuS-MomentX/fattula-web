@@ -36,6 +36,10 @@ export default function HomePage() {
             </Link>
           </p>
         </div>
+        <a href="#showcase-heading" className="scroll-cue">
+          <span className="scroll-cue__mouse" aria-hidden="true" />
+          Листайте вниз: там вещи из игр и сериалов
+        </a>
       </section>
 
       <ItemsShowcase />
