@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { sounds } from "@/lib/sound";
 
 const WORD = ["KeyF", "KeyA", "KeyT", "KeyT", "KeyU", "KeyL", "KeyA"];
 const DURATION = 6000;
@@ -17,6 +18,7 @@ export default function PartyMode() {
     const start = () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       clearTimeout(timer);
+      sounds.party();
       document.documentElement.dataset.party = "";
       setOn(true);
       timer = setTimeout(() => {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { sounds } from "@/lib/sound";
 
 const CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "KeyB", "KeyA"];
 const COLORS = ["#a97cff", "#d8c3ff", "#7c4dff", "#e36fd8", "#ffc4a3"];
@@ -24,6 +25,7 @@ export default function Konami() {
   }, []);
 
   const celebrate = () => {
+    sounds.win();
     setToast(true);
     setTimeout(() => setToast(false), 3200);
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ITEMS } from "./showcase-items";
 import { useSpin } from "./useSpin";
+import { sounds } from "@/lib/sound";
 
 const SEEN_KEY = "fattula:showcase-seen";
 
@@ -16,6 +17,7 @@ export default function ItemsShowcase() {
   const [active, setActive] = useState(0);
   const count = ITEMS.length;
   const wasComplete = useRef(false);
+  const heardCount = useRef<number | null>(null);
   const [seen, setSeen] = useState<string[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [complete, setComplete] = useState(false);
@@ -81,6 +83,14 @@ export default function ItemsShowcase() {
     if (!loaded) return;
     setSeen((prev) => (prev.includes(item.name) ? prev : [...prev, item.name]));
   }, [loaded, item.name]);
+
+  // A blip whenever a new item joins the collection. The first render after
+  // loading only records the count, so opening the page stays silent.
+  useEffect(() => {
+    if (!loaded) return;
+    if (heardCount.current !== null && seen.length > heardCount.current) sounds.collect();
+    heardCount.current = seen.length;
+  }, [loaded, seen.length]);
 
   useEffect(() => {
     if (!loaded || seen.length === 0) return;

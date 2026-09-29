@@ -4,6 +4,7 @@ import { RssIcon } from "./Icons";
 import AccentPicker from "./AccentPicker";
 import ThemeToggle from "./ThemeToggle";
 import EffectsToggle from "./EffectsToggle";
+import SoundToggle from "./SoundToggle";
 
 export default function Footer() {
   return (
@@ -28,6 +29,7 @@ export default function Footer() {
           <ThemeToggle />
           <AccentPicker />
           <EffectsToggle />
+          <SoundToggle />
         </div>
         <div className="site-footer__col site-footer__hint">
           <p className="site-footer__title">Подсказка</p>

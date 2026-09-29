@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { sounds } from "@/lib/sound";
 
 type Orb = { id: number; x: number; y: number; r: number; speed: number; color: string };
 
@@ -18,6 +19,7 @@ export default function OrbGame() {
   const [pops, setPops] = useState<{ id: number; x: number; y: number }[]>([]);
   const areaRef = useRef<HTMLDivElement>(null);
   const nextId = useRef(0);
+  const scoreRef = useRef(0);
 
   useEffect(() => {
     try {
@@ -78,6 +80,7 @@ export default function OrbGame() {
   }, [playing, score, best]);
 
   const start = () => {
+    scoreRef.current = 0;
     setScore(0);
     setTime(ROUND);
     setOrbs([]);
@@ -86,6 +89,8 @@ export default function OrbGame() {
 
   const pop = (orb: Orb) => {
     setOrbs((list) => list.filter((o) => o.id !== orb.id));
+    sounds.pop(scoreRef.current);
+    scoreRef.current += 1;
     setScore((s) => s + 1);
     const id = orb.id;
     setPops((list) => [...list, { id, x: orb.x, y: orb.y }]);
