@@ -20,10 +20,18 @@ function rng(seed: number) {
   };
 }
 
+/** A fresh seeded random stream and a colour picker that draws from it. */
+function generator(seed: string, colors: string[]) {
+  const r = rng(hash(seed));
+  const pick = () => colors[Math.floor(r() * colors.length)];
+  return { r, pick };
+}
+
 const W = 320;
 const H = 200;
 
-function Orbits({ r, pick }: Pattern) {
+function Orbits({ seed, colors }: Pattern) {
+  const { r, pick } = generator(seed, colors);
   const cx = 60 + r() * 200;
   const cy = 40 + r() * 120;
   return (
@@ -46,7 +54,8 @@ function Orbits({ r, pick }: Pattern) {
   );
 }
 
-function Stripes({ r, pick }: Pattern) {
+function Stripes({ seed, colors }: Pattern) {
+  const { r, pick } = generator(seed, colors);
   const angle = -35 + r() * 70;
   let x = -120;
   const bands = [];
@@ -60,7 +69,8 @@ function Stripes({ r, pick }: Pattern) {
   return <g transform={`rotate(${angle} ${W / 2} ${H / 2})`}>{bands}</g>;
 }
 
-function Dots({ r, pick }: Pattern) {
+function Dots({ seed, colors }: Pattern) {
+  const { r, pick } = generator(seed, colors);
   const step = 22 + Math.floor(r() * 10);
   const fx = r() * W;
   const fy = r() * H;
@@ -76,23 +86,21 @@ function Dots({ r, pick }: Pattern) {
   return <>{dots}</>;
 }
 
-type Pattern = { r: () => number; pick: () => string };
+type Pattern = { seed: string; colors: string[] };
 const PATTERNS = [Orbits, Stripes, Dots];
 
 /** Project cover: an image if one is set, otherwise a pattern drawn from the slug. */
 export default function Cover({ seed, src, alt = "" }: { seed: string; src?: string; alt?: string }) {
   if (src) return <img className="cover" src={withBase(src)} alt={alt} loading="lazy" />;
 
-  const r = rng(hash(seed));
-  const offset = Math.floor(r() * PALETTE.length);
-  const colors = PALETTE.slice(offset).concat(PALETTE.slice(0, offset)).slice(0, 3);
-  const pick = () => colors[Math.floor(r() * colors.length)];
+  const rotate = hash(seed + "c") % PALETTE.length;
+  const colors = PALETTE.slice(rotate).concat(PALETTE.slice(0, rotate)).slice(0, 3);
   const Pattern = PATTERNS[hash(seed + "p") % PATTERNS.length];
 
   return (
     <svg className="cover" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" role="img" aria-label={alt || undefined} aria-hidden={alt ? undefined : true}>
       <rect width={W} height={H} fill="#21143a" />
-      <Pattern r={r} pick={pick} />
+      <Pattern seed={seed} colors={colors} />
     </svg>
   );
 }

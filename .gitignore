@@ -6,3 +6,7 @@ next-env.d.ts
 .env*.local
 .vercel
 .DS_Store
+
+# Written by `next dev`; not part of the site
+AGENTS.md
+CLAUDE.md
