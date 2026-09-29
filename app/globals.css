@@ -2447,6 +2447,53 @@ button {
   }
 }
 
+/* ---------- Holographic foil on covers ---------- */
+.project-row__cover,
+.featured-post__cover {
+  position: relative;
+}
+
+.project-row__cover::after,
+.featured-post__cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      circle at calc(50% + var(--rx, 0) * 45%) calc(50% + var(--ry, 0) * 45%),
+      rgb(255 255 255 / 0.35),
+      transparent 45%
+    ),
+    linear-gradient(
+      calc(115deg + var(--rx, 0) * 25deg),
+      transparent 20%,
+      rgb(255 120 220 / 0.35) 35%,
+      rgb(120 220 255 / 0.35) 45%,
+      rgb(190 255 160 / 0.3) 55%,
+      rgb(255 220 120 / 0.3) 65%,
+      transparent 80%
+    );
+  background-size: 100% 100%, 220% 220%;
+  background-position: center, calc(50% + var(--rx, 0) * 40%) calc(50% + var(--ry, 0) * 40%);
+  mix-blend-mode: color-dodge;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.project-row:hover .project-row__cover::after,
+.featured-post:hover .featured-post__cover::after {
+  opacity: 0.85;
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .project-row__cover::after,
+  .featured-post__cover::after {
+    display: none;
+  }
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;
