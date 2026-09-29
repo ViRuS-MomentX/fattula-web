@@ -4,6 +4,7 @@ import Cover from "@/components/Cover";
 import CoverMorph from "@/components/CoverMorph";
 import ItemsShowcase from "@/components/ItemsShowcase";
 import Marquee from "@/components/Marquee";
+import FloatingShapes from "@/components/FloatingShapes";
 import { getPosts, getProjects } from "@/lib/content";
 import { formatDate, plural } from "@/lib/format";
 
@@ -22,6 +23,7 @@ export default function HomePage() {
   return (
     <div className="page home">
       <section className="hero">
+        <FloatingShapes />
         <Wordmark />
         <div className="hero__intro">
           <p className="lead">

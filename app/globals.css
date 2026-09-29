@@ -2029,6 +2029,224 @@ button {
   }
 }
 
+/* ---------- Custom cursor ---------- */
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+
+.has-cursor input,
+.has-cursor textarea {
+  cursor: text !important;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  border-radius: 50%;
+  pointer-events: none;
+  translate: -100px -100px;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--lilac);
+}
+
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1.5px solid color-mix(in oklab, var(--violet) 80%, transparent);
+  transition: scale 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.25s, border-color 0.25s;
+}
+
+.cursor-ring[data-hot] {
+  scale: 1.7;
+  border-color: transparent;
+  background: color-mix(in oklab, var(--violet) 18%, transparent);
+}
+
+.cursor-ring[data-down] {
+  scale: 0.8;
+}
+
+:root:not(.has-cursor) .cursor-dot,
+:root:not(.has-cursor) .cursor-ring {
+  display: none;
+}
+
+/* ---------- Living borders ---------- */
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.feature::after,
+.featured-post::after,
+.project-list--grid .project-row::after,
+.more-projects__item::after,
+.project-info__card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle), transparent 0 55%, var(--violet) 70%, var(--lilac) 78%, transparent 90%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+  animation: border-spin 3.5s linear infinite;
+  animation-play-state: paused;
+  pointer-events: none;
+}
+
+.feature:hover::after,
+.featured-post:hover::after,
+.project-list--grid .project-row:hover::after,
+.more-projects__item:hover::after,
+.project-info__card:hover::after {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.project-info__card {
+  isolation: isolate;
+}
+
+@keyframes border-spin {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* ---------- Floating glass shapes ---------- */
+.shapes {
+  --px: 0;
+  --py: 0;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  perspective: 900px;
+  pointer-events: none;
+}
+
+.shape {
+  position: absolute;
+  translate: calc(var(--px) * var(--depth) * 22px) calc(var(--py) * var(--depth) * 22px);
+  transition: translate 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.shape--ring {
+  top: 2%;
+  right: 4%;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 20px solid transparent;
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    linear-gradient(140deg, color-mix(in oklab, var(--lilac) 70%, transparent), color-mix(in oklab, var(--violet-strong) 30%, transparent)) border-box;
+  opacity: 0.55;
+  mask: radial-gradient(circle, transparent 44px, #000 45px);
+  animation: float-a 9s ease-in-out infinite alternate;
+}
+
+.shape--cube {
+  bottom: 10%;
+  left: 46%;
+  width: 70px;
+  height: 70px;
+  transform-style: preserve-3d;
+  animation: cube-spin 22s linear infinite;
+}
+
+.shape--cube span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in oklab, var(--lilac) 45%, transparent);
+  border-radius: 8px;
+  background: linear-gradient(135deg, color-mix(in oklab, var(--lilac) 22%, transparent), color-mix(in oklab, var(--violet-strong) 10%, transparent));
+}
+
+.shape--cube span:nth-child(1) {
+  transform: translateZ(35px);
+}
+
+.shape--cube span:nth-child(2) {
+  transform: rotateY(90deg) translateZ(35px);
+}
+
+.shape--cube span:nth-child(3) {
+  transform: rotateX(90deg) translateZ(35px);
+}
+
+.shape--blob {
+  top: 48%;
+  right: 16%;
+  width: 90px;
+  height: 90px;
+  border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+  background: radial-gradient(circle at 30% 30%, #fff8, transparent 40%), linear-gradient(135deg, var(--violet), #e36fd8);
+  opacity: 0.45;
+  filter: blur(0.5px);
+  animation: blob-morph 11s ease-in-out infinite alternate;
+}
+
+.shape--pill {
+  top: 4%;
+  left: 36%;
+  width: 120px;
+  height: 38px;
+  border: 1px solid color-mix(in oklab, var(--lilac) 40%, transparent);
+  border-radius: 999px;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--lilac) 18%, transparent), transparent);
+  rotate: -18deg;
+  animation: float-b 8s ease-in-out infinite alternate;
+}
+
+@keyframes float-a {
+  to {
+    transform: translateY(24px) rotate(40deg);
+  }
+}
+
+@keyframes float-b {
+  to {
+    transform: translateY(-18px) translateX(14px);
+  }
+}
+
+@keyframes cube-spin {
+  from {
+    transform: rotateX(-24deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(-24deg) rotateY(360deg);
+  }
+}
+
+@keyframes blob-morph {
+  to {
+    border-radius: 40% 60% 45% 55% / 60% 40% 60% 40%;
+    transform: translateY(-20px) rotate(25deg);
+  }
+}
+
+@media (max-width: 860px) {
+  .shapes {
+    display: none;
+  }
+}
+
 /* ---------- 404 ---------- */
 .not-found {
   max-width: 720px;
