@@ -10,6 +10,7 @@ import HeadingAnchors from "@/components/HeadingAnchors";
 import ResumeReading from "@/components/ResumeReading";
 import Toc from "@/components/Toc";
 import ShareButton from "@/components/ShareButton";
+import ReadingControls from "@/components/ReadingControls";
 import { BackIcon } from "@/components/Icons";
 import { getPost, getPosts } from "@/lib/content";
 import { formatDate, plural } from "@/lib/format";
@@ -75,9 +76,10 @@ export default async function PostPage({ params }: Props) {
             </span>
           ))}
         </p>
-        <p>
+        <div className="article__tools">
           <ShareButton title={post.title} />
-        </p>
+          <ReadingControls />
+        </div>
       </header>
       <div className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
 

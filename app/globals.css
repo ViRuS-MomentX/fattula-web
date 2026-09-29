@@ -1204,7 +1204,7 @@ code {
 }
 
 .prose {
-  font-size: 1.125rem;
+  font-size: calc(1.125rem * var(--prose-scale, 1));
   line-height: 1.75;
 }
 
@@ -2492,6 +2492,32 @@ button {
   .featured-post__cover::after {
     display: none;
   }
+}
+
+/* ---------- Reading controls ---------- */
+.article__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}
+
+.reading-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reading-controls__label {
+  min-width: 8.5em;
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+  text-align: center;
+}
+
+.reading-controls .chip:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 /* ---------- 404 ---------- */
