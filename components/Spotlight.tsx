@@ -15,6 +15,8 @@ export default function Spotlight() {
       const r = el.getBoundingClientRect();
       el.style.setProperty("--mx", `${e.clientX - r.left}px`);
       el.style.setProperty("--my", `${e.clientY - r.top}px`);
+      el.style.setProperty("--rx", (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
+      el.style.setProperty("--ry", (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
     };
     document.addEventListener("pointermove", onMove, { passive: true });
     return () => document.removeEventListener("pointermove", onMove);

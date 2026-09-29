@@ -17,11 +17,29 @@ const PAGES: SearchItem[] = [
 
 const norm = (s: string) => s.toLowerCase().replaceAll("ё", "е");
 
+const RECENT_KEY = "fattula:recent";
+const readRecent = (): string[] => {
+  try {
+    return JSON.parse(localStorage.getItem(RECENT_KEY) ?? "[]");
+  } catch {
+    return [];
+  }
+};
+const saveRecent = (href: string) => {
+  try {
+    const next = [href, ...readRecent().filter((h) => h !== href)].slice(0, 4);
+    localStorage.setItem(RECENT_KEY, JSON.stringify(next));
+  } catch {
+    /* storage unavailable: recent items are only a convenience */
+  }
+};
+
 export default function CommandPalette({ items }: { items: SearchItem[] }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
+  const [recent, setRecent] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
 
@@ -29,7 +47,13 @@ export default function CommandPalette({ items }: { items: SearchItem[] }) {
 
   const results = useMemo(() => {
     const q = norm(query.trim());
-    if (!q) return all;
+    if (!q) {
+      const recentItems = recent
+        .map((href) => all.find((i) => i.href === href))
+        .filter((i): i is SearchItem => Boolean(i))
+        .map((i) => ({ ...i, hint: "Недавнее" }));
+      return [...recentItems, ...all.filter((i) => !recent.includes(i.href))];
+    }
     return all
       .map((item) => {
         const title = norm(item.title);
@@ -45,12 +69,13 @@ export default function CommandPalette({ items }: { items: SearchItem[] }) {
       .filter((r) => r.score > 0)
       .sort((a, b) => b.score - a.score)
       .map((r) => r.item);
-  }, [all, query]);
+  }, [all, query, recent]);
 
   const show = useCallback(() => {
     returnFocus.current = document.activeElement as HTMLElement | null;
     setQuery("");
     setActive(0);
+    setRecent(readRecent());
     setOpen(true);
   }, []);
 
@@ -88,6 +113,7 @@ export default function CommandPalette({ items }: { items: SearchItem[] }) {
   const go = (item: SearchItem | undefined) => {
     if (!item) return;
     setOpen(false);
+    saveRecent(item.href);
     if (item.href.endsWith(".xml")) window.location.href = withBase(item.href);
     else router.push(item.href);
   };

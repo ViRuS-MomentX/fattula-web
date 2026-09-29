@@ -978,11 +978,20 @@ code {
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: 16px 16px 16px 4px;
-  transition: border-radius 0.25s;
+  transition: border-radius 0.25s, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s;
 }
 
+/* The cover tilts toward the pointer, like a card held in the hand. */
 .project-row:hover .project-row__cover {
   border-radius: 4px 16px 16px 16px;
+  transform: perspective(700px) rotateY(calc(var(--rx, 0) * 7deg)) rotateX(calc(var(--ry, 0) * -7deg)) scale(1.03);
+  box-shadow: 0 24px 40px -20px rgb(7 3 13 / 0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-row:hover .project-row__cover {
+    transform: none;
+  }
 }
 
 /* ---------- Article (post / project page) ---------- */
