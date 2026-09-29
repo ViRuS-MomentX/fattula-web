@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import ReadingProgress from "@/components/ReadingProgress";
 import CodeCopy from "@/components/CodeCopy";
 import Toc from "@/components/Toc";
+import ShareButton from "@/components/ShareButton";
 import { BackIcon } from "@/components/Icons";
 import { getPost, getPosts } from "@/lib/content";
 import { formatDate, plural } from "@/lib/format";
@@ -54,6 +55,9 @@ export default async function PostPage({ params }: Props) {
               {t}
             </span>
           ))}
+        </p>
+        <p>
+          <ShareButton title={post.title} />
         </p>
       </header>
       <div className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />

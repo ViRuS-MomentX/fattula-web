@@ -4,6 +4,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CommandPalette from "@/components/CommandPalette";
 import Spotlight from "@/components/Spotlight";
+import KeyboardNav from "@/components/KeyboardNav";
+import BackToTop from "@/components/BackToTop";
 import { getSearchIndex } from "@/lib/content";
 import { SITE } from "@/lib/format";
 import "./globals.css";
@@ -45,6 +47,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <CommandPalette items={getSearchIndex()} />
         <Spotlight />
+        <KeyboardNav />
+        <BackToTop />
       </body>
     </html>
   );
