@@ -43,6 +43,7 @@ html {
 }
 
 body {
+  overflow-x: clip;
   margin: 0;
   min-height: 100dvh;
   display: flex;
@@ -426,7 +427,8 @@ code {
   color: var(--text);
   font-weight: 500;
   text-decoration: none;
-  transition: border-color 0.15s, background-color 0.15s;
+  transform: translate(var(--mag, 0px, 0px));
+  transition: border-color 0.15s, background-color 0.15s, transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .button:hover {
@@ -805,6 +807,72 @@ code {
   from {
     opacity: 0;
     transform: translateY(12px);
+  }
+}
+
+/* ---------- Magnetic chips ---------- */
+.chip,
+.search-trigger {
+  transform: translate(var(--mag, 0px, 0px));
+  transition: color 0.15s, border-color 0.15s, background-color 0.15s, transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ---------- Marquee ---------- */
+.marquee {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin: 0 0 clamp(48px, 8vw, 96px) -50vw;
+  padding: 18px 0;
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  background: color-mix(in oklab, var(--bg) 60%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__row {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.marquee__row li {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1rem + 1.6vw, 2.2rem);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--text-dim);
+}
+
+.marquee__row li:nth-child(3n + 1) {
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--violet);
+}
+
+.marquee__row li::after {
+  content: "✦";
+  margin: 0 28px;
+  font-size: 0.6em;
+  color: var(--violet);
+  -webkit-text-stroke: 0;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
   }
 }
 

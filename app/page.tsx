@@ -2,12 +2,21 @@ import Link from "next/link";
 import Wordmark from "@/components/Wordmark";
 import Cover from "@/components/Cover";
 import ItemsShowcase from "@/components/ItemsShowcase";
+import Marquee from "@/components/Marquee";
 import { getPosts, getProjects } from "@/lib/content";
 import { formatDate, plural } from "@/lib/format";
 
 export default function HomePage() {
   const [latest] = getPosts();
-  const projects = getProjects().slice(0, 3);
+  const allProjects = getProjects();
+  const projects = allProjects.slice(0, 3);
+  const topics = Array.from(
+    new Set(
+      [...allProjects.map((p) => p.category), ...getPosts().flatMap((p) => p.tags)].map(
+        (t) => t.charAt(0).toUpperCase() + t.slice(1),
+      ),
+    ),
+  );
 
   return (
     <div className="page home">
@@ -29,6 +38,8 @@ export default function HomePage() {
       </section>
 
       <ItemsShowcase />
+
+      <Marquee items={topics} />
 
       <div className="home__grid">
         {latest && (

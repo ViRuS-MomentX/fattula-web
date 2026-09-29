@@ -8,6 +8,7 @@ import KeyboardNav from "@/components/KeyboardNav";
 import BackToTop from "@/components/BackToTop";
 import Konami from "@/components/Konami";
 import Backdrop from "@/components/Backdrop";
+import Magnetic from "@/components/Magnetic";
 import { getSearchIndex } from "@/lib/content";
 import { SITE } from "@/lib/format";
 import "./globals.css";
@@ -29,7 +30,13 @@ export const metadata: Metadata = {
   title: { default: SITE.name, template: `%s | ${SITE.name}` },
   description: SITE.description,
   alternates: { types: { "application/rss+xml": "/rss.xml" } },
-  openGraph: { siteName: SITE.name, locale: "ru_RU", type: "website" },
+  openGraph: {
+    siteName: SITE.name,
+    locale: "ru_RU",
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630 }],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
@@ -53,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <KeyboardNav />
         <BackToTop />
         <Konami />
+        <Magnetic />
       </body>
     </html>
   );
