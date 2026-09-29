@@ -39,7 +39,8 @@ function readDir(dir: string) {
   if (!fs.existsSync(full)) return [];
   return fs
     .readdirSync(full)
-    .filter((f) => f.endsWith(".md"))
+    // Files starting with "_" are templates and are never published.
+    .filter((f) => f.endsWith(".md") && !f.startsWith("_"))
     .map((file) => {
       const raw = fs.readFileSync(path.join(full, file), "utf8");
       const { data, content } = matter(raw);
