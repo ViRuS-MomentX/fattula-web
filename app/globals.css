@@ -982,7 +982,6 @@ code {
   width: min(100%, 380px);
   aspect-ratio: 1;
   perspective: 900px;
-  touch-action: pan-y;
   cursor: grab;
   user-select: none;
 }

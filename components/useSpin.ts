@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Drag sideways on the element to spin its content around the Y axis.
+ * Drag sideways with a mouse on the element to spin its content around the Y axis.
  * Releasing keeps the spin going with inertia until friction stops it.
  * Writes the angle to the `--drag` custom property.
  */
@@ -45,6 +45,8 @@ export function useSpin<T extends HTMLElement>() {
     };
 
     const down = (e: PointerEvent) => {
+      // Touch swipes belong to the carousel; only a mouse drag spins the item.
+      if (e.pointerType !== "mouse") return;
       dragging = true;
       lastX = e.clientX;
       velocity = 0;
