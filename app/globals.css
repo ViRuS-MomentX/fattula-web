@@ -10,7 +10,7 @@
   --violet-strong: #7c4dff;
   --lilac: #d8c3ff;
   --peach: #ffc4a3;
-  --wordmark-rest: #54407a;
+  --wordmark-rest: #8b73c4;
 
   --font-display: "Unbounded", system-ui, sans-serif;
   --font-body: "Onest", system-ui, sans-serif;
@@ -3225,4 +3225,39 @@ button {
   font-size: 0.75em;
   opacity: 0.6;
   font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Calmer hero ---------- */
+.shape--cube,
+.shape--pill,
+.shape--blob {
+  display: none;
+}
+
+.shape--ring {
+  opacity: 0.35;
+}
+
+.hero__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: clamp(28px, 5vw, 56px) 0 0;
+  padding: 18px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+}
+
+.hero__stats strong {
+  margin-right: 4px;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.hero {
+  padding-bottom: clamp(32px, 5vw, 56px);
 }

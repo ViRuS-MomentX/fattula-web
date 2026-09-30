@@ -13,6 +13,7 @@ export default function HomePage() {
   const [latest] = getPosts();
   const allProjects = getProjects();
   const projects = allProjects.slice(0, 3);
+  const postCount = getPosts().length;
   const topics = Array.from(
     new Set(
       [...allProjects.map((p) => p.category), ...getPosts().flatMap((p) => p.tags)].map(
@@ -41,10 +42,17 @@ export default function HomePage() {
             </Link>
           </p>
         </div>
-        <a href="#showcase-heading" className="scroll-cue">
-          <span className="scroll-cue__mouse" aria-hidden="true" />
-          Ниже: вещи из игр и сериалов
-        </a>
+        <ul className="hero__stats" aria-label="Коротко о сайте">
+          <li>
+            <strong>{postCount}</strong> {plural(postCount, "пост", "поста", "постов")}
+          </li>
+          <li>
+            <strong>{allProjects.length}</strong> {plural(allProjects.length, "проект", "проекта", "проектов")}
+          </li>
+          <li>
+            <strong>10</strong> предметов в коллекции
+          </li>
+        </ul>
       </section>
 
       <ItemsShowcase />
