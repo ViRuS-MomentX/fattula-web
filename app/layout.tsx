@@ -7,6 +7,7 @@ import Spotlight from "@/components/Spotlight";
 import KeyboardNav from "@/components/KeyboardNav";
 import BackToTop from "@/components/BackToTop";
 import Konami from "@/components/Konami";
+import Achievements from "@/components/Achievements";
 import Backdrop from "@/components/Backdrop";
 import Magnetic from "@/components/Magnetic";
 import RouteProgress from "@/components/RouteProgress";
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <KeyboardNav />
         <BackToTop />
         <Konami />
+        <Achievements />
         <Magnetic />
         <Cursor />
         <PartyMode />

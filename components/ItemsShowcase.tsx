@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ITEMS, type ShowcaseItem } from "./showcase-items";
 import { useSpin } from "./useSpin";
 import { sounds } from "@/lib/sound";
+import { unlock } from "@/lib/achievements";
 
 const SEEN_KEY = "fattula:showcase-seen";
 
@@ -137,6 +138,7 @@ export default function ItemsShowcase() {
     // Only celebrate the moment the last item is collected, not on every visit.
     if (done && !wasComplete.current && seen.length > 0) {
       setComplete(true);
+      unlock("collector");
       setTimeout(() => setComplete(false), 4000);
     }
     wasComplete.current = done;

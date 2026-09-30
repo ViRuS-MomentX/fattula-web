@@ -5,6 +5,7 @@ import AccentPicker from "./AccentPicker";
 import ThemeToggle from "./ThemeToggle";
 import EffectsToggle from "./EffectsToggle";
 import SoundToggle from "./SoundToggle";
+import AchievementsList from "./AchievementsList";
 
 export default function Footer() {
   return (
@@ -40,6 +41,9 @@ export default function Footer() {
           <AccentPicker />
           <EffectsToggle />
           <SoundToggle />
+        </div>
+        <div className="site-footer__col">
+          <AchievementsList />
         </div>
         <div className="site-footer__col site-footer__hint">
           <p className="site-footer__title">Подсказка</p>

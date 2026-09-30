@@ -1,5 +1,6 @@
 "use client";
 
+import { unlock } from "@/lib/achievements";
 import { useEffect, useState } from "react";
 
 export const ACCENTS = [
@@ -20,6 +21,7 @@ export default function AccentPicker() {
   }, []);
 
   const choose = (id: string) => {
+    unlock("accent");
     setAccent(id);
     document.documentElement.dataset.accent = id;
     try {

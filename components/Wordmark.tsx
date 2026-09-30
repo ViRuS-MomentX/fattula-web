@@ -1,5 +1,6 @@
 "use client";
 
+import { unlock } from "@/lib/achievements";
 import { useEffect, useRef } from "react";
 
 const MIN = 200;
@@ -143,6 +144,7 @@ export default function Wordmark({ word = "fattula", as: Tag = "h1" }: { word?: 
             el.classList.remove("wordmark__letter--pop");
             void el.offsetWidth; // restart the animation on repeated clicks
             el.classList.add("wordmark__letter--pop");
+            unlock("letters");
           }}
           onAnimationEnd={(e) => e.currentTarget.classList.remove("wordmark__letter--pop")}
         >

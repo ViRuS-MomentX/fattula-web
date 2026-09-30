@@ -1,5 +1,6 @@
 "use client";
 
+import { unlock } from "@/lib/achievements";
 import { useEffect, useState } from "react";
 
 export const THEME_KEY = "fattula:theme";
@@ -14,6 +15,7 @@ export default function ThemeToggle() {
 
   const choose = (next: "dark" | "light") => {
     setTheme(next);
+    unlock("theme");
     if (next === "light") document.documentElement.dataset.theme = "light";
     else delete document.documentElement.dataset.theme;
     document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "light" ? "#f6f2fc" : "#150c21");

@@ -4,6 +4,7 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { useRouter } from "next/navigation";
 import type { SearchItem } from "@/lib/content";
 import { withBase } from "@/lib/format";
+import { unlock } from "@/lib/achievements";
 import { OPEN_PALETTE_EVENT } from "./Header";
 import { ClockIcon, CompassIcon, PostsIcon, ProjectsIcon, SearchIcon } from "./Icons";
 
@@ -94,6 +95,7 @@ export default function CommandPalette({ items }: { items: SearchItem[] }) {
     setActive(0);
     setRecent(readRecent());
     setOpen(true);
+    unlock("search");
   }, []);
 
   const close = useCallback(() => {
