@@ -676,7 +676,7 @@ code {
 
 /* ---------- Marquee ---------- */
 .marquee {
-  margin: 0 0 clamp(48px, 8vw, 96px);
+  margin: 0 0 clamp(36px, 5vw, 64px);
   padding: 18px 0;
   overflow: hidden;
   border-block: 1px solid var(--line);
@@ -898,7 +898,7 @@ code {
 /* ---------- Carousel of items ---------- */
 .carousel {
   --glow: #a97cff;
-  margin-bottom: clamp(48px, 8vw, 96px);
+  margin-bottom: clamp(32px, 5vw, 56px);
 }
 
 .carousel__head {
