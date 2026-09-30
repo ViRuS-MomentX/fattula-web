@@ -42,11 +42,11 @@ export default function ProjectList({ projects }: { projects: Item[] }) {
           {categories.length > 1 && (
             <div className="chips" role="group" aria-label="Фильтр по категории">
               <button type="button" className="chip" aria-pressed={category === null} onClick={() => setCategory(null)}>
-                Все
+                Все <span className="chip__count">{projects.length}</span>
               </button>
               {categories.map((c) => (
                 <button key={c} type="button" className="chip" aria-pressed={category === c} onClick={() => setCategory(c)}>
-                  {c}
+                  {c} <span className="chip__count">{projects.filter((p) => p.category === c).length}</span>
                 </button>
               ))}
             </div>

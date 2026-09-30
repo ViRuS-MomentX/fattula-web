@@ -3219,3 +3219,10 @@ button {
     transition: none !important;
   }
 }
+
+.chip__count {
+  margin-left: 4px;
+  font-size: 0.75em;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
